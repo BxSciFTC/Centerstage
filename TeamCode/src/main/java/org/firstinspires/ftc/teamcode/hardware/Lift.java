@@ -12,33 +12,33 @@ public class Lift implements Mechanism {
 
     //absolute encoders will be plugged into same port as motors
     DcMotorEx shoulder;
-    DcMotorEx arm;
+    DcMotorEx elbow;
 
     //count per revolution of the absolute encoders
     public static final double CPR = 0000000;
 
-    //encoder counts for when the shoulder is at 0 degrees, and the arm at 180
-    //basically the arm is extended all the way horizontally
+    //encoder counts for when the shoulder is at 0 degrees, and the elbow at 180
+    //basically the elbow is extended all the way horizontally
     public static final double shoulder0 = 00000;
-    public static final double arm180 = 00000;
+    public static final double elbow180 = 00000;
 
     public static final double shoulderkG = 0;
     public static final double shoulderkP = 0;
     public static final double shoulderkI = 0;
     public static final double shoulderkD = 0;
 
-    public static final double armkG = 0;
-    public static final double armkP = 0;
-    public static final double armkI = 0;
-    public static final double armkD = 0;
+    public static final double elbowkG = 0;
+    public static final double elbowkP = 0;
+    public static final double elbowkI = 0;
+    public static final double elbowkD = 0;
 
     PIDCoefficients shoulderPID = new PIDCoefficients(shoulderkP, shoulderkI, shoulderkD);
     // create the controller
     PIDFController shoulderController = new PIDFController(shoulderPID, 0, 0 ,0, (p, v) -> getShoulderFg(p, v));
 
-    PIDCoefficients armPID = new PIDCoefficients(shoulderkP, shoulderkI, shoulderkD);
+    PIDCoefficients elbowPID = new PIDCoefficients(shoulderkP, shoulderkI, shoulderkD);
     // create the controller
-    PIDFController armController = new PIDFController(armPID, 0, 0, 0, (p, v) -> getArmFg(p, v));
+    PIDFController elbowController = new PIDFController(elbowPID, 0, 0, 0, (p, v) -> getelbowFg(p, v));
 
 
     boolean isReached = false;
@@ -47,10 +47,10 @@ public class Lift implements Mechanism {
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
         shoulder = hwMap.get(DcMotorEx.class, "m1");
-        arm = hwMap.get(DcMotorEx.class, "m2");
+        elbow = hwMap.get(DcMotorEx.class, "m2");
         //DO NOT RESET THE ENCODERS, WE WANT TO MAINTAIN POSITION
         shoulder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        elbow.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     //gets currents angle of shoulder in degrees
@@ -66,9 +66,9 @@ public class Lift implements Mechanism {
         return count;
     }
 
-    //gets current angle of arm in degrees
-    public double armDegrees() {
-        double count = arm.getCurrentPosition();
+    //gets current angle of elbow in degrees
+    public double elbowDegrees() {
+        double count = elbow.getCurrentPosition();
         count -= shoulder0; //gets amount of ticks from 0 degrees
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
@@ -87,7 +87,7 @@ public class Lift implements Mechanism {
 
 
     //can choose whether of not to use provided inputs, doesn't matter
-    public double getArmFg(double position, double velocity) {
+    public double getelbowFg(double position, double velocity) {
         //TODO:
         return 0;
     }
