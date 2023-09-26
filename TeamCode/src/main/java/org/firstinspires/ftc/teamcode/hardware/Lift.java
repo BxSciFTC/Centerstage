@@ -22,12 +22,12 @@ public class Lift implements Mechanism {
     public static final double shoulder0 = 00000;
     public static final double elbow180 = 00000;
 
-    public static final double shoulderkG = 0;
+
     public static final double shoulderkP = 0;
     public static final double shoulderkI = 0;
     public static final double shoulderkD = 0;
 
-    public static final double elbowkG = 0;
+
     public static final double elbowkP = 0;
     public static final double elbowkI = 0;
     public static final double elbowkD = 0;
