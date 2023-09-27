@@ -93,6 +93,11 @@ public class Lift implements Mechanism {
         timeElbow.reset();
     }
 
+    public void PIDUpdate() {
+        PIDUpdateShoulder();
+        PIDUpdateElbow();
+    }
+
     public void PIDUpdateShoulder() {
         MotionState state = profileShoulder.get(timeShoulder.seconds());
         shoulderController.setTargetPosition(state.getX());
@@ -112,14 +117,14 @@ public class Lift implements Mechanism {
     }
 
 
-    public double angleToCountShoulder(double angle) {
+    private double angleToCountShoulder(double angle) {
         double counts = (360/angle)/CPR;
         //TODO: may be negative sign
         return shoulder0 + counts;
 
     }
 
-    public double angleToCountElbow(double angle) {
+    private double angleToCountElbow(double angle) {
         double counts = (360/angle)/CPR;
         //TODO: may be negative sign
         return elbow180 + counts;
@@ -152,14 +157,14 @@ public class Lift implements Mechanism {
     }
 
     //can choose whether of not to use provided inputs, doesn't matter
-    public double getShoulderFg(double position, double velocity) {
+    private double getShoulderFg(double position, double velocity) {
         //TODO:
         return 0;
     }
 
 
     //can choose whether of not to use provided inputs, doesn't matter
-    public double getElbowFg(double position, double velocity) {
+    private double getElbowFg(double position, double velocity) {
         //TODO:
         return 0;
     }
