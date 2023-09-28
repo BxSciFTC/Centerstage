@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Lift implements Mechanism {
+public class Arm implements Mechanism {
     HardwareMap hwMap;
 
     //absolute encoders will be plugged into same port as motors

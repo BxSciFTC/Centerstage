@@ -1,22 +1,20 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
-import java.lang.Math;
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import static java.lang.Math.*;
 
 
 //formulaic mapping of motors and angles to x y coordinate
-public class LiftMapper implements Mechanism {
+public class ArmMapper implements Mechanism {
 
-    Lift lift = new Lift();
+    Arm arm = new Arm();
     HardwareMap hwMap;
 
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
-        lift.init(hwMap);
+        arm.init(hwMap);
     }
     /*
         Forward is positive x
@@ -25,12 +23,12 @@ public class LiftMapper implements Mechanism {
 
     public void moveTo(double x, double y) {
         double[] angles = calculateAngle(x, y);
-        lift.elbowGoToAngle(angles[0]);
-        lift.elbowGoToAngle(angles[1]);
+        arm.elbowGoToAngle(angles[0]);
+        arm.elbowGoToAngle(angles[1]);
     }
 
     public void PIDUpdate() {
-        lift.PIDUpdate();
+        arm.PIDUpdate();
     }
 
     //elbow angle will be DOWN angle
