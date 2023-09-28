@@ -118,14 +118,14 @@ public class Arm implements Mechanism {
 
 
     private double angleToCountShoulder(double angle) {
-        double counts = (360/angle)/CPR;
+        double counts = (angle/360)*CPR;
         //TODO: may be negative sign
         return shoulder0 + counts;
 
     }
 
     private double angleToCountElbow(double angle) {
-        double counts = (360/angle)/CPR;
+        double counts = (angle/360)*CPR;
         //TODO: may be negative sign
         return elbow180 + counts;
     }
