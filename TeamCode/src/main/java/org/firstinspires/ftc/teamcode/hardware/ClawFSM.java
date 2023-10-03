@@ -23,7 +23,16 @@ public class ClawFSM implements Mechanism {
         ClawMechanism.init(hwMap);
         clawS = ClawState.OPEN;
         hinge = HingeState.ZEROANGLE;
+        //ArmMapper.elbowDownAngle;
     }
+    public void open(){
+        clawS = ClawState.OPEN;
+    }
+    public void close(){
+        clawS = ClawState.CLOSE;
+    }
+
+
 
 
 }
