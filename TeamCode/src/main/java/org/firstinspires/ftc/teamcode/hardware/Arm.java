@@ -56,8 +56,8 @@ public class Arm implements Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
-        shoulder = hwMap.get(DcMotorEx.class, "m1");
-        elbow = hwMap.get(DcMotorEx.class, "m2");
+        shoulder = hwMap.get(DcMotorEx.class, "shoulder");
+        elbow = hwMap.get(DcMotorEx.class, "elbow");
         //DO NOT RESET THE ENCODERS, WE WANT TO MAINTAIN POSITION
         shoulder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         elbow.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);

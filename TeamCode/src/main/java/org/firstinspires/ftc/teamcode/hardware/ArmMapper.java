@@ -51,6 +51,24 @@ public class ArmMapper implements Mechanism {
         this.y = y;
     }
 
+    public void shift(double x, double y) {
+        double newX = this.x + x;
+        double newY = this.y + y;
+        double[] angles = calculateAngle(newX,newY);
+
+        if (angles[0] < 0 || angles[0] > 90 || calculateElbowAngle(angles[0], angles[1]) < 10)
+            return;
+
+        shoulderAngle = angles[0];
+        elbowAngle = calculateElbowAngle(angles[0], angles[1]);
+        elbowDownAngle = angles[1];
+        arm.shoulderGoToAngle(shoulderAngle);
+        arm.elbowGoToAngle(elbowAngle);
+        this.x =  newX;
+        this.y = newY;
+
+    }
+
     public double calculateElbowAngle(double shoulder, double elbowDown) {
         return 180 - shoulder - elbowDown;
     }
