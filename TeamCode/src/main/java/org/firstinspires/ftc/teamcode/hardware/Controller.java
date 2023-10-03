@@ -35,4 +35,5 @@ public class Controller implements Mechanism {
     void armMove() {
         robot.armShift(gamepad1.left_stick_y, gamepad1.right_stick_y);
     }
+
 }
