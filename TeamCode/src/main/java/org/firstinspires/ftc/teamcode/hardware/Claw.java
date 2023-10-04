@@ -14,7 +14,7 @@ public class Claw implements Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
-        clawControler = hwMap.get(Servo.class, "ClawM");
+        clawControler = hwMap.get(Servo.class, "Claw");
         hingeControler = hwMap.get(Servo.class, "Hinge");
     }
     public void open() {
