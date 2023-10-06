@@ -11,10 +11,12 @@ public class ArmMapper implements Mechanism {
     Arm arm = new Arm();
     HardwareMap hwMap;
 
+    //is q1 angle in the model
     public static double shoulderAngle;
     public static double elbowAngle;
 
-    //TODO: calculate
+
+    //is q2 angle in the model
     public static double elbowDownAngle;
     public static double x, y;
 
@@ -24,12 +26,16 @@ public class ArmMapper implements Mechanism {
         arm.init(hwMap);
         shoulderAngle = arm.shoulderDegrees();
         elbowAngle = arm.elbowDegrees();
-        elbowDownAngle = (90 - elbowAngle - (90 - shoulderAngle));
+        elbowDownAngle = 180 - elbowAngle;
+
         //x, y
-        double vector1[] = {RobotConstants.shoulderLen*cos(shoulderAngle), RobotConstants.shoulderLen*sin(shoulderAngle)};
-        double vector2[] = {RobotConstants.elbowLen*cos(-elbowDownAngle), RobotConstants.elbowLen*sin(-elbowDownAngle)};
+        double shoulderAngleDegrees = Math.toRadians(shoulderAngle);
+        double vector1[] = {RobotConstants.shoulderLen*cos(shoulderAngleDegrees), RobotConstants.shoulderLen*sin(shoulderAngleDegrees)};
+        double trueElbowAngle = elbowAngle - (90 - shoulderAngle) - 90;
+        double trueElbowAngleDegrees = elbowAngle - (90 - shoulderAngle) - 90;
+        double vector2[] = {RobotConstants.elbowLen*cos(trueElbowAngleDegrees), RobotConstants.elbowLen*sin(trueElbowAngleDegrees)};
         x = vector1[0] + vector2[0];
-        y = vector1[0] + vector2[0];
+        y = vector1[1] + vector2[1];
     }
     /*
         Forward is positive x
@@ -39,12 +45,11 @@ public class ArmMapper implements Mechanism {
     public void moveTo(double x, double y) {
         double[] angles = calculateAngle(x, y);
 
-        if (angles[0] < 0 || angles[0] > 90 || calculateElbowAngle(angles[0], angles[1]) < 10)
-            return;
+        if (strainedAngles(angles)) return;
 
         shoulderAngle = angles[0];
-        elbowAngle = calculateElbowAngle(angles[0], angles[1]);
-        elbowDownAngle = angles[1];
+        elbowAngle = angles[1];
+        elbowDownAngle = angles[2];
         arm.shoulderGoToAngle(shoulderAngle);
         arm.elbowGoToAngle(elbowAngle);
         this.x = x;
@@ -56,21 +61,21 @@ public class ArmMapper implements Mechanism {
         double newY = this.y + y;
         double[] angles = calculateAngle(newX,newY);
 
-        if (angles[0] < 0 || angles[0] > 90 || calculateElbowAngle(angles[0], angles[1]) < 10)
-            return;
+        if (strainedAngles(angles)) return;
 
         shoulderAngle = angles[0];
-        elbowAngle = calculateElbowAngle(angles[0], angles[1]);
-        elbowDownAngle = angles[1];
+        elbowAngle = angles[1];
+        elbowDownAngle = angles[2];
         arm.shoulderGoToAngle(shoulderAngle);
         arm.elbowGoToAngle(elbowAngle);
+
         this.x =  newX;
         this.y = newY;
-
     }
 
-    public double calculateElbowAngle(double shoulder, double elbowDown) {
-        return 180 - shoulder - elbowDown;
+    //we keep q1 bounded 0-90 and 180-q2 bounded 0-180
+    public boolean strainedAngles(double[] angles) {
+        return (angles[0] < 0 || angles[0] > 90 || angles[1] > 180 || angles[1] < 10);
     }
 
     public void PIDUpdate() {
@@ -91,7 +96,8 @@ public class ArmMapper implements Mechanism {
                         (a + b * cos(armAngle))
 
         );
-        return new double[] {shoulderAngle, armAngle};
+        //q1, angle between arms, and q2 in the model
+        return new double[] {shoulderAngle, 180-armAngle, armAngle};
     }
 
 }
