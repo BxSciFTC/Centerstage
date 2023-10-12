@@ -8,7 +8,8 @@ public class Claw implements Mechanism {
     Servo clawControler;
     Servo hingeControler;
 
-    public static double elbowDownAngle;
+    public static double elbowAngle;
+    public static double shoulderAngle;
 
     public static double open = 0.5;
     public static double close = -0.5;
@@ -19,7 +20,8 @@ public class Claw implements Mechanism {
         this.hwMap = hwMap;
         clawControler = hwMap.get(Servo.class, "Claw");
         hingeControler = hwMap.get(Servo.class, "Hinge");
-        elbowDownAngle = ArmMapper.elbowDownAngle;
+        elbowAngle = ArmMapper.elbowAngle;
+        shoulderAngle = ArmMapper.shoulderAngle;
     }
     public void open() {
         clawControler.setPosition(open);
@@ -32,16 +34,19 @@ public class Claw implements Mechanism {
     }
 
     public void thirtyAngleConstant(){
-        if(elbowDownAngle >= 0){
-            double angle1 = 90 - elbowDownAngle;
-            double servoAngle = angle1;
-            hingeControler.setPosition(servoAngle);
-        }
+        double elbowDownAngle = 180 - shoulderAngle - elbowAngle;
+        double a = 90 - elbowDownAngle;
+        double servoAngle = a + 30;
+        hingeControler.setPosition(Func.map(servoAngle, -90, 180, -1, 1));
     }
 
     public void zeroAngleConstant(){
-        //if()
+        double elbowDownAngle = 180 - shoulderAngle - elbowAngle;
+        double a = 90 - elbowDownAngle;
+        double servoAngle = a + 90;
+        hingeControler.setPosition(Func.map(servoAngle, -90, 180, -1, 1));
     }
 
 }
+
 
