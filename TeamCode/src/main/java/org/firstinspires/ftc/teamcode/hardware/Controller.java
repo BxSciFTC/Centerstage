@@ -23,7 +23,7 @@ public class Controller implements Mechanism {
     public void run(Gamepad gamepad) {
         gamepad2.copy(gamepad1);
         gamepad1.copy(gamepad);
-//        move();
+        move();
 //        score();
         armMove();
     }
@@ -33,7 +33,21 @@ public class Controller implements Mechanism {
 //
 //    }
     void armMove() {
-        robot.armShift(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        double xShift = 0;
+        double yShift = 0;
+        if (gamepad1.dpad_up) {
+            xShift += 1;
+        } else if (gamepad1.dpad_down) {
+            xShift -= 1;
+        } else if (gamepad1.triangle) {
+            yShift += 1;
+        }else if (gamepad1.cross) {
+            yShift -= 1;
+        }
+        robot.armShift(xShift, yShift);
     }
 
+    void move() {
+        robot.drive.setWeightedDrivePower(gamepad1);
+    }
 }
