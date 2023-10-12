@@ -57,8 +57,8 @@ public class ArmMapper implements Mechanism {
     }
 
     public void shift(double x, double y) {
-        double newX = this.x + x;
-        double newY = this.y + y;
+        double newX = isInRange(this.x + x, y) ? this.x + x : x;
+        double newY = isInRange(newX, this.y + y) ? this.y + y : y;
         double[] angles = calculateAngle(newX,newY);
 
         if (strainedAngles(angles)) return;
@@ -71,6 +71,12 @@ public class ArmMapper implements Mechanism {
 
         this.x =  newX;
         this.y = newY;
+    }
+
+    //tells if coordinate is outside the range of motion of the two arms(a circle shape)
+    public boolean isInRange(double x, double y) {
+        double totalLen = RobotConstants.shoulderLen+RobotConstants.elbowLen;
+        return !(x > cos(atan(y / x)) * totalLen || y > sin(atan(y / x)) * totalLen);
     }
 
     //we keep q1 bounded 0-90 and 180-q2 bounded 0-180
