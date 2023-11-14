@@ -47,4 +47,7 @@ public class ArmClawFSM implements Mechanism {
         claw.close();
         arm.moveTo(100000000, 10000000);
     }
+    public void update(){
+        arm.PIDUpdate();
+    }
 }

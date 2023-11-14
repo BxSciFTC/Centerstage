@@ -15,6 +15,13 @@ public class Lift implements Mechanism {
     HardwareMap hwMap;
     DcMotorEx lift;
 
+    LiftState liftState;
+
+    public enum LiftState {
+        UP,
+        DOWN,
+        NORMAL, //meaning no movement;
+    }
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
@@ -22,9 +29,27 @@ public class Lift implements Mechanism {
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftState = LiftState.NORMAL;
     }
 
     public void setPower(double power) {
         lift.setPower(power);
     }
+
+    public void update(){
+        switch (liftState){
+            case NORMAL:
+                lift.setPower(0);
+                break;
+            case UP:
+                lift.setPower(1);
+                break;
+            case DOWN:
+                lift.setPower(-1);
+                break;
+        }
+
+    }
+
+
 }
