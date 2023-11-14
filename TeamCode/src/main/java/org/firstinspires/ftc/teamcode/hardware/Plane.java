@@ -22,7 +22,7 @@ public class Plane implements Mechanism {
         planeState = planeState.OFF;
     }
     public void on(){
-        planeMotor.setPower(0.8);
+        planeMotor.setPower(1);
         toggle = true;
     }
     public void off(){
