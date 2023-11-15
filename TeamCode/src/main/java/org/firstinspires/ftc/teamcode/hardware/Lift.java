@@ -38,15 +38,15 @@ public class Lift implements Mechanism {
 
     public void update(){
         switch (liftState){
-            case NORMAL:
-                lift.setPower(0);
-                break;
             case UP:
                 lift.setPower(1);
                 break;
             case DOWN:
                 lift.setPower(-1);
                 break;
+            case NORMAL:
+                lift.setPower(0);
+
         }
 
     }

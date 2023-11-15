@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 //teleOp class
 public class Controller implements Mechanism {
     Robot robot = new Robot();
-    Plane plane = new Plane();
+
     HardwareMap hwMap;
 
     //1 is current gamepad, 2 is previous iteration
@@ -27,14 +27,25 @@ public class Controller implements Mechanism {
         planeFly();
 //        score();
         armMove();
+        lift();
+    }
+    void lift(){
+        if(gamepad1.left_trigger==0.1) {
+           robot.lift.liftState= Lift.LiftState.DOWN;
+        }else if (gamepad1.right_trigger==0.1){
+            robot.lift.liftState= Lift.LiftState.UP;
+        }else{
+            robot.lift.liftState= Lift.LiftState.NORMAL;
+        }
+
     }
     void planeFly(){
         if (gamepad1.left_bumper){
-            plane.planeState= Plane.PlaneState.ON;
+            robot.plane.planeState= Plane.PlaneState.ON;
         }else {
-            plane.planeState= Plane.PlaneState.OFF;
+            robot.plane.planeState= Plane.PlaneState.OFF;
         }
-        plane.update();
+
     }
 
 //    private void move() {
