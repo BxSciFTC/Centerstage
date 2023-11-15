@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 //teleOp class
 public class Controller implements Mechanism {
     Robot robot = new Robot();
-
+    Plane plane = new Plane();
     HardwareMap hwMap;
 
     //1 is current gamepad, 2 is previous iteration
@@ -24,8 +24,17 @@ public class Controller implements Mechanism {
         gamepad2.copy(gamepad1);
         gamepad1.copy(gamepad);
         move();
+        planeFly();
 //        score();
         armMove();
+    }
+    void planeFly(){
+        if (gamepad1.left_bumper){
+            plane.planeState= Plane.PlaneState.ON;
+        }else {
+            plane.planeState= Plane.PlaneState.OFF;
+        }
+        plane.update();
     }
 
 //    private void move() {
@@ -35,9 +44,11 @@ public class Controller implements Mechanism {
     void armMove() {
         double xShift = 0;
         double yShift = 0;
+
         if (gamepad1.dpad_up) {
             xShift += 1;
-        } else if (gamepad1.dpad_down) {
+        }
+        else if (gamepad1.dpad_down) {
             xShift -= 1;
         } else if (gamepad1.triangle) {
             yShift += 1;

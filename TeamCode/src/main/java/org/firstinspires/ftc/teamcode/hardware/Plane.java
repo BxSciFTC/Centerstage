@@ -6,7 +6,7 @@ public class Plane implements Mechanism {
     HardwareMap hwMap;
     DcMotorEx planeMotor;
 
-    boolean toggle = false;
+
     public PlaneState planeState;
 
     public enum PlaneState {
@@ -23,24 +23,23 @@ public class Plane implements Mechanism {
     }
     public void on(){
         planeMotor.setPower(1);
-        toggle = true;
+
     }
     public void off(){
         planeMotor.setPower(0);
-        toggle = false;
+
+    }
+    public void Ontoggle(){
+        planeState=PlaneState.ON;
     }
 
     public void update(){
         switch (planeState) {
             case ON:
-                if(toggle == false) {
-                    on();
-                }
+                on();
                 break;
             case OFF:
-                if(toggle == true){
-                    off();
-                }
+                off();
         }
     }
 }
