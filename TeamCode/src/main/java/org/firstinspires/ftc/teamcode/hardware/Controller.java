@@ -28,10 +28,13 @@ public class Controller implements Mechanism {
 //        score();
         armMove();
         lift();
+
+        clawHingeMove();
+        clawMove();
     }
     void lift(){
         if(gamepad1.left_trigger==0.1) {
-           robot.lift.liftState= Lift.LiftState.DOWN;
+            robot.lift.liftState= Lift.LiftState.DOWN;
         }else if (gamepad1.right_trigger==0.1){
             robot.lift.liftState= Lift.LiftState.UP;
         }else{
@@ -67,6 +70,25 @@ public class Controller implements Mechanism {
             yShift -= 1;
         }
         robot.armShift(xShift, yShift);
+    }
+
+    void clawHingeMove(){ //controls hinge with buttons
+        if(gamepad1.square){
+            robot.claw.setThirtyAngle();
+        }
+        if(gamepad1.circle){
+            robot.claw.setZeroAngle();
+        }
+        robot.claw.update();
+    }
+    void clawMove(){ //controls open and close with buttons
+        if(gamepad1.right_bumper){
+            robot.claw.open();
+        }
+        else{
+            robot.claw.close();
+        }
+        robot.claw.update();
     }
 
     void move() {
