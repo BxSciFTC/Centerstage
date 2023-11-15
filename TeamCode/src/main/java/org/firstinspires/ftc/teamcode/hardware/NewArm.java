@@ -14,11 +14,11 @@ public class NewArm implements Mechanism {
     HardwareMap hwMap;
 
     //absolute encoders will be plugged into same port as motors
-    DcMotorEx shoulder;
-    DcMotorEx elbow;
+    public DcMotorEx shoulder;
+    public DcMotorEx elbow;
 
     //count per revolution of the absolute encoders
-    public static final double CPR = 0000000;
+    public static final double CPR = 8192;
 
     //encoder counts for when the shoulder is at 0 degrees, and the elbow at 180
     //basically the elbow is extended all the way horizontally
@@ -92,18 +92,19 @@ public class NewArm implements Mechanism {
         shoulderController.setF(getElbowT());
     }
 
-
+    public static int negative1 = 1;
     private int angleToCountShoulder(double angle) {
         double counts = (angle/360)*CPR;
         //TODO: may be negative sign
-        return (int)(shoulder0 + counts);
+        return negative1*(int)(shoulder0 + counts);
 
     }
 
+    public static int negative2 = 1;
     private int angleToCountElbow(double angle) {
         double counts = (angle/360)*CPR;
         //TODO: may be negative sign
-        return (int)(elbow180 + counts);
+        return negative2*(int)(elbow180 + counts);
     }
 
     //gets currents angle of shoulder in degrees
@@ -141,7 +142,7 @@ public class NewArm implements Mechanism {
     }
 
     //can choose whether of not to use provided inputs, doesn't matter
-    private double getShoulderT() {
+    public double getShoulderT() {
         double shoulderDegrees = shoulderDegrees();
         double elbowDegrees = elbowDegrees();
         double shoulderRadians = shoulderRadians();
@@ -162,7 +163,7 @@ public class NewArm implements Mechanism {
 
 
     //can choose whether of not to use provided inputs, doesn't matter
-    private double getElbowT() {
+    public double getElbowT() {
         double shoulderDegrees = shoulderDegrees();
         double elbowDegrees = elbowDegrees();
 
