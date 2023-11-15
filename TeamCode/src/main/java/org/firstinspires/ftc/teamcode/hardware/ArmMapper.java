@@ -8,7 +8,7 @@ import static java.lang.Math.*;
 //formulaic mapping of motors and angles to x y coordinate
 public class ArmMapper implements Mechanism {
 
-    Arm arm = new Arm();
+    NewArm arm = new NewArm();
     HardwareMap hwMap;
 
     //is q1 angle in the model
