@@ -41,9 +41,9 @@ public class NewArm implements Mechanism {
     public static double elbowkD = 0;
 
     //remember to keep updating feedforward
-    com.arcrobotics.ftclib.controller.PIDFController shoulderController = new com.arcrobotics.ftclib.controller.PIDFController(shoulderkP, shoulderkI, shoulderkD, getShoulderT());
+    PIDFController shoulderController = new PIDFController(shoulderkP, shoulderkI, shoulderkD, getShoulderT());
 
-    com.arcrobotics.ftclib.controller.PIDFController elbowController = new com.arcrobotics.ftclib.controller.PIDFController(shoulderkP, shoulderkI, shoulderkD, getShoulderT());
+    PIDFController elbowController = new PIDFController(shoulderkP, shoulderkI, shoulderkD, getShoulderT());
 
     boolean isReached = false;
 
