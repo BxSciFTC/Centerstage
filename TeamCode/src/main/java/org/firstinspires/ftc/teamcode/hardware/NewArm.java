@@ -172,4 +172,11 @@ public class NewArm implements Mechanism {
         return RobotConstants.elbowLen * elbowFg * cos(angleFromDown * Math.PI / 180);
     }
 
+    public void calibrateShoulder() {
+        shoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void elbowShoulder() {
+        elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
 }

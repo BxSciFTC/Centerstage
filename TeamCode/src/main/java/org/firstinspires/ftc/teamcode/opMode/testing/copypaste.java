@@ -34,7 +34,7 @@ public class copypaste extends OpMode {
         int armPos = motor.getCurrentPosition();
         double pid  = controller.calculate(armPos, target);
 
-        double power = pid;
+        double power = pid + f;
         motor.setPower(power);
 
         telemetry.addData("pos", armPos);

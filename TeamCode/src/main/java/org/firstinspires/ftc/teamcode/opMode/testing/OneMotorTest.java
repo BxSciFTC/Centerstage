@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class OneMotorTest extends LinearOpMode {
     DcMotor motor;
     public void runOpMode(){
-        motor = hardwareMap.get(DcMotor.class, "Lift Motor");
+        motor = hardwareMap.get(DcMotor.class, "test1");
         waitForStart();
         while(opModeIsActive()) {
             motor.setPower(gamepad1.left_stick_y);
