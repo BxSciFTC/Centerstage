@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.hardware;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Plane implements Mechanism {
     HardwareMap hwMap;
-    DcMotorEx planeMotor;
+    Servo planeMotor;
 
 
     public PlaneState planeState;
@@ -18,15 +19,15 @@ public class Plane implements Mechanism {
     public void init(HardwareMap hwMap) {
 
         this.hwMap = hwMap;
-        planeMotor = hwMap.get(DcMotorEx.class, "planeMotor");
+        planeMotor = hwMap.get(Servo.class, "planeMotor");
         planeState = planeState.OFF;
     }
     public void on(){
-        planeMotor.setPower(1);
+        planeMotor.setPosition(0);
 
     }
     public void off(){
-        planeMotor.setPower(0);
+        planeMotor.setPosition(0.5);
 
     }
     public void Ontoggle(){
