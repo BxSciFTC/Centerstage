@@ -104,93 +104,93 @@ public class NewArm implements Mechanism {
         elbowController.setD(elbowkD);
     }
 
-//    public void PIDUpdateShoulder() {
-//        shoulderController.setF(getShoulderT());
-//    }
-//
-//    public void PIDUpdateElbow() {
-//        shoulderController.setF(getElbowT());
-//    }
-//
-//    public static int negative1 = 1;
-//    private int angleToCountShoulder(double angle) {
-//        double counts = (angle/360)*CPR;
-//        //TODO: may be negative sign
-//        return negative1*(int)(shoulder0 + counts);
-//
-//    }
-//
-//    public static int negative2 = 1;
-//    private int angleToCountElbow(double angle) {
-//        double counts = (angle/360)*CPR;
-//        //TODO: may be negative sign
-//        return negative2*(int)(elbow180 + counts);
-//    }
-//
-//    //gets currents angle of shoulder in degrees
-//    public double shoulderDegrees() {
-//        double count = shoulder.getCurrentPosition();
-//        count -= shoulder0; //gets amount of ticks from 0 degrees
-//
-//        //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
-//
-//        count /= CPR; //gets # of revolutions
-//        count *= 360; //gets # of degrees
-//
-//        return count;
-//    }
-//
-//    //gets current angle of elbow in degrees
-//    public double elbowDegrees() {
-//        double count = elbow.getCurrentPosition();
-//        count -= elbow180; //gets amount of ticks from 0 degrees
-//
-//        //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
-//
-//        count /= CPR; //gets # of revolutions
-//        count *= 360; //gets # of degrees
-//
-//        return count;
-//    }
-//
-//    public double shoulderRadians() {
-//        return Math.toRadians(shoulderDegrees());
-//    }
-//
-//    public double elbowRadians() {
-//        return Math.toRadians(elbowDegrees());
-//    }
-//
-//    //can choose whether of not to use provided inputs, doesn't matter
-//    public double getShoulderT() {
-//        double shoulderDegrees = shoulderDegrees();
-//        double elbowDegrees = elbowDegrees();
-//        double shoulderRadians = shoulderRadians();
-//        double elbowRadians = elbowRadians();
-//        double angle3 = shoulderRadians-Math.PI;
-//        double angle4 = 90 - Math.PI - shoulderRadians - angle3;
-//        if (shoulderDegrees >= 0 && shoulderDegrees < 90) {
-//            return motorFg*(cos(shoulderRadians))*(RobotConstants.shoulderLen) +
-//                    (elbowFg*cos(angle3)) * RobotConstants.shoulderLen / cos(angle4) +
-//                    shoulderFg * cos(shoulderRadians) * (RobotConstants.shoulderLen / 2);
-//        } else if (shoulderDegrees >= 90 && shoulderDegrees <= 180) {
-//            return motorFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
-//                    elbowFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
-//                    shoulderFg * cos(shoulderRadians);
-//        }
-//        return 0;
-//    }
-//
-//
-//    //can choose whether of not to use provided inputs, doesn't matter
-//    public double getElbowT() {
-//        double shoulderDegrees = shoulderDegrees();
-//        double elbowDegrees = elbowDegrees();
-//
-//        //simulates polar axis
-//        double angleFromDown = elbowDegrees - (90 - shoulderDegrees) - 90;
-//        return RobotConstants.elbowLen * elbowFg * cos(angleFromDown * Math.PI / 180);
-//    }
+    public void PIDUpdateShoulder() {
+        shoulderController.setF(getShoulderT());
+    }
+
+    public void PIDUpdateElbow() {
+        shoulderController.setF(getElbowT());
+    }
+
+    public static int negative1 = 1;
+    private int angleToCountShoulder(double angle) {
+        double counts = (angle/360)*CPR;
+        //TODO: may be negative sign
+        return negative1*(int)(shoulder0 + counts);
+
+    }
+
+    public static int negative2 = 1;
+    private int angleToCountElbow(double angle) {
+        double counts = (angle/360)*CPR;
+        //TODO: may be negative sign
+        return negative2*(int)(elbow180 + counts);
+    }
+
+    //gets currents angle of shoulder in degrees
+    public double shoulderDegrees() {
+        double count = shoulder.getCurrentPosition();
+        count -= shoulder0; //gets amount of ticks from 0 degrees
+
+        //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
+
+        count /= CPR; //gets # of revolutions
+        count *= 360; //gets # of degrees
+
+        return count;
+    }
+
+    //gets current angle of elbow in degrees
+    public double elbowDegrees() {
+        double count = elbow.getCurrentPosition();
+        count -= elbow180; //gets amount of ticks from 0 degrees
+
+        //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
+
+        count /= CPR; //gets # of revolutions
+        count *= 360; //gets # of degrees
+
+        return count;
+    }
+
+    public double shoulderRadians() {
+        return Math.toRadians(shoulderDegrees());
+    }
+
+    public double elbowRadians() {
+        return Math.toRadians(elbowDegrees());
+    }
+
+    //can choose whether of not to use provided inputs, doesn't matter
+    public double getShoulderT() {
+        double shoulderDegrees = shoulderDegrees();
+        double elbowDegrees = elbowDegrees();
+        double shoulderRadians = shoulderRadians();
+        double elbowRadians = elbowRadians();
+        double angle3 = shoulderRadians-Math.PI;
+        double angle4 = 90 - Math.PI - shoulderRadians - angle3;
+        if (shoulderDegrees >= 0 && shoulderDegrees < 90) {
+            return motorFg*(cos(shoulderRadians))*(RobotConstants.shoulderLen) +
+                    (elbowFg*cos(angle3)) * RobotConstants.shoulderLen / cos(angle4) +
+                    shoulderFg * cos(shoulderRadians) * (RobotConstants.shoulderLen / 2);
+        } else if (shoulderDegrees >= 90 && shoulderDegrees <= 180) {
+            return motorFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
+                    elbowFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
+                    shoulderFg * cos(shoulderRadians);
+        }
+        return 0;
+    }
+
+
+    //can choose whether of not to use provided inputs, doesn't matter
+    public double getElbowT() {
+        double shoulderDegrees = shoulderDegrees();
+        double elbowDegrees = elbowDegrees();
+
+        //simulates polar axis
+        double angleFromDown = elbowDegrees - (90 - shoulderDegrees) - 90;
+        return RobotConstants.elbowLen * elbowFg * cos(angleFromDown * Math.PI / 180);
+    }
 
     public void calibrateShoulder() {
         shoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
