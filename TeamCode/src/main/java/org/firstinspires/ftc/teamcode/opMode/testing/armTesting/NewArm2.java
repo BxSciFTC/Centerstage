@@ -12,9 +12,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.teamcode.hardware.Mechanism;
 
+
+
 @Config
-@TeleOp(name = "NewArm2TestBasic")
-public class NewArm2 extends LinearOpMode implements Mechanism {
+public class NewArm2 implements Mechanism {
     HardwareMap hwMap;
     DcMotorEx shoulder;
     DcMotorEx elbow;
@@ -33,7 +34,7 @@ public class NewArm2 extends LinearOpMode implements Mechanism {
 
 
     //count per revolution of the absolute encoders
-    public static final double CPR = 8192;
+    public static final double CPR = 28;
 
     //encoder counts for when the shoulder is at 0 degrees, and the elbow at 180
     //basically the elbow is extended all the way horizontally
@@ -42,19 +43,23 @@ public class NewArm2 extends LinearOpMode implements Mechanism {
 
 
     public void shoulderGoToAngle(double angle) {
-        int prevPos = shoulder.getCurrentPosition();
-        if (angleToCountShoulder(angle) == prevPos) return;
-        int target = angleToCountShoulder(angle);
-        double power = shoulderController.calculate(prevPos, target);
+        shoulderPos = shoulder.getCurrentPosition();
+        if (angleToCountShoulder(angle) == shoulderPos) return;
+        shoulderTarget = angleToCountShoulder(angle);
+        double power = shoulderController.calculate(shoulderPos, shoulderTarget);
+
+        power1 = power;
 
         shoulder.setPower(power);
     }
 
     public void elbowGoToAngle(double angle) {
-        int prevPos = elbow.getCurrentPosition();
-        if (angleToCountElbow(angle) == prevPos) return;
-        int target = angleToCountElbow(angle);
-        double power = elbowController.calculate(prevPos, target);
+        elbowPos = elbow.getCurrentPosition();
+        if (angleToCountElbow(angle) == elbowPos) return;
+        elbowTarget = angleToCountElbow(angle);
+        double power = elbowController.calculate(elbowPos, elbowTarget);
+
+        power2 = power;
 
         elbow.setPower(power);
     }
@@ -124,25 +129,24 @@ public class NewArm2 extends LinearOpMode implements Mechanism {
         shoulderTouch = hwMap.get(TouchSensor.class, "ShoulderTouch");
         elbowTouch = hwMap.get(TouchSensor.class, "ElbowTouch");
 
-        prevShoulderTouch = shoulderTouch.isPressed();
-        prevElbowTouch = elbowTouch.isPressed();
+        prevShoulderTouch = false;
+        prevElbowTouch = false;
     }
 
     public void PIDUpdate() {
         shoulderController.setPID(p1, i1, d1);
         elbowController.setPID(p2, i2, d2);
 
-
-
-        shoulderPos = shoulder.getCurrentPosition();
-        double pid1  = shoulderController.calculate(shoulderPos, shoulderTarget);
-        power1 = pid1 + shoulderFF();
-        shoulder.setPower(power1);
-
-        elbowPos = elbow.getCurrentPosition();
-        double pid2  = elbowController.calculate(elbowPos, elbowTarget);
-        power2 = pid2 + elbowFF();
-        elbow.setPower(power2);
+//
+//        shoulderPos = shoulder.getCurrentPosition();
+//        double pid1  = shoulderController.calculate(shoulderPos, shoulderTarget);
+//        power1 = pid1 + shoulderFF();
+//        shoulder.setPower(power1);
+//
+//        elbowPos = elbow.getCurrentPosition();
+//        double pid2  = elbowController.calculate(elbowPos, elbowTarget);
+//        power2 = pid2 + elbowFF();
+//        elbow.setPower(power2);
 
         if (shoulderTouch.isPressed()) {
             calibrateShoulder();
@@ -181,22 +185,35 @@ public class NewArm2 extends LinearOpMode implements Mechanism {
         } else
             return;
     }
-
-    @Override
-    public void runOpMode() {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        init(hardwareMap);
-
-        waitForStart();
-        while (opModeIsActive()) {
-            PIDUpdate();
-            telemetry.addData("shoulderPos", shoulderPos);
-            telemetry.addData("shoulderTarget", shoulderTarget);
-            telemetry.addData("elbowPos", elbowPos);
-            telemetry.addData("elbowTarget", elbowTarget);
-            telemetry.addData("power1", power1);
-            telemetry.addData("power2", power2);
-            telemetry.update();
-        }
-    }
+//
+//    public static double STestAngle = 10;
+//    public static double ETestAngle = 10;
+//
+//    @Override
+//    public void runOpMode() {
+//        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+//        init(hardwareMap);
+//
+//        waitForStart();
+//        while (opModeIsActive()) {
+//            PIDUpdate();
+//
+//            shoulderGoToAngle(STestAngle);
+//            elbowGoToAngle(ETestAngle);
+//            if (gamepad1.cross) {
+//
+//            }
+//            if (gamepad1.triangle) {
+//
+//            }
+//
+//            telemetry.addData("shoulderPos", shoulderPos);
+//            telemetry.addData("shoulderTarget", shoulderTarget);
+//            telemetry.addData("elbowPos", elbowPos);
+//            telemetry.addData("elbowTarget", elbowTarget);
+//            telemetry.addData("power1", power1);
+//            telemetry.addData("power2", power2);
+//            telemetry.update();
+//        }
+//    }
 }
