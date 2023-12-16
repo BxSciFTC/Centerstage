@@ -25,16 +25,14 @@ public class NewArm2 implements Mechanism {
     boolean prevElbowTouch;
 
     private PIDController shoulderController;
-    public static double p1 = 0.03, i1 = 0, d1 = 0;
+    public static double p1 = 0.01, i1 = 0, d1 = 0;
 
     private PIDController elbowController;
-    public static double p2 = 0.03, i2 = 0, d2 = 0;
-
-
+    public static double p2 = 0.01, i2 = 0, d2 = 0;
 
 
     //count per revolution of the absolute encoders
-    public static final double CPR = 28;
+    public static final double CPR = 3000;
 
     //encoder counts for when the shoulder is at 0 degrees, and the elbow at 180
     //basically the elbow is extended all the way horizontally
@@ -46,37 +44,31 @@ public class NewArm2 implements Mechanism {
         shoulderPos = shoulder.getCurrentPosition();
         if (angleToCountShoulder(angle) == shoulderPos) return;
         shoulderTarget = angleToCountShoulder(angle);
-        double power = shoulderController.calculate(shoulderPos, shoulderTarget);
 
-        power1 = power;
 
-        shoulder.setPower(power);
     }
 
     public void elbowGoToAngle(double angle) {
         elbowPos = elbow.getCurrentPosition();
         if (angleToCountElbow(angle) == elbowPos) return;
         elbowTarget = angleToCountElbow(angle);
-        double power = elbowController.calculate(elbowPos, elbowTarget);
-
-        power2 = power;
-
-        elbow.setPower(power);
     }
 
     public static int negative1 = 1;
+
     private int angleToCountShoulder(double angle) {
-        double counts = (angle/360)*CPR;
+        double counts = (angle / 360) * CPR;
         //TODO: may be negative sign
-        return negative1*(int)(shoulder0 + counts);
+        return negative1 * (int) (shoulder0 + counts);
 
     }
 
     public static int negative2 = 1;
+
     private int angleToCountElbow(double angle) {
-        double counts = (angle/360)*CPR;
+        double counts = (angle / 360) * CPR;
         //TODO: may be negative sign
-        return negative2*(int)(elbow180 + counts);
+        return negative2 * (int) (elbow180 + counts);
     }
 
     //gets currents angle of shoulder in degrees
@@ -104,8 +96,6 @@ public class NewArm2 implements Mechanism {
 
         return count;
     }
-
-
 
 
     public static int shoulderTarget = 0;
@@ -137,16 +127,11 @@ public class NewArm2 implements Mechanism {
         shoulderController.setPID(p1, i1, d1);
         elbowController.setPID(p2, i2, d2);
 
-//
-//        shoulderPos = shoulder.getCurrentPosition();
-//        double pid1  = shoulderController.calculate(shoulderPos, shoulderTarget);
-//        power1 = pid1 + shoulderFF();
-//        shoulder.setPower(power1);
-//
-//        elbowPos = elbow.getCurrentPosition();
-//        double pid2  = elbowController.calculate(elbowPos, elbowTarget);
-//        power2 = pid2 + elbowFF();
-//        elbow.setPower(power2);
+        power1 = shoulderController.calculate(shoulderPos, shoulderTarget);
+        shoulder.setPower(power1 + shoulderFF());
+
+        power2 = elbowController.calculate(elbowPos, elbowTarget);
+        elbow.setPower(power2 + elbowFF());
 
         if (shoulderTouch.isPressed()) {
             calibrateShoulder();
@@ -185,35 +170,4 @@ public class NewArm2 implements Mechanism {
         } else
             return;
     }
-//
-//    public static double STestAngle = 10;
-//    public static double ETestAngle = 10;
-//
-//    @Override
-//    public void runOpMode() {
-//        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-//        init(hardwareMap);
-//
-//        waitForStart();
-//        while (opModeIsActive()) {
-//            PIDUpdate();
-//
-//            shoulderGoToAngle(STestAngle);
-//            elbowGoToAngle(ETestAngle);
-//            if (gamepad1.cross) {
-//
-//            }
-//            if (gamepad1.triangle) {
-//
-//            }
-//
-//            telemetry.addData("shoulderPos", shoulderPos);
-//            telemetry.addData("shoulderTarget", shoulderTarget);
-//            telemetry.addData("elbowPos", elbowPos);
-//            telemetry.addData("elbowTarget", elbowTarget);
-//            telemetry.addData("power1", power1);
-//            telemetry.addData("power2", power2);
-//            telemetry.update();
-//        }
-//    }
 }
