@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.opMode.auton;
-
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-
-public class BlueFarCornerConstants {
+public class BlueFarTrapConstants {
     //EVERYTHING IS IN INCHES
     //public static double fieldwidth=144;
     //public static double fieldlength=144;
+
     public static double STARTX=12;
     public static double STARTY=36;
     public static double START_HEADING=0;
@@ -26,16 +24,15 @@ public class BlueFarCornerConstants {
     public static double placeRad2=Math.atan2(1,2);
     public static double placeRad3=Math.toRadians(270);
     public static double beaconAreaPlacex=36;
-    public static double beaconAreaPlacey=36;
+    public static double beaconAreaPlacey=84;
     //public static final Vector2d placelocation1 = new Vector2d(place1locx, place1locy);
     //public static final Vector2d placelocation2 = new Vector2d(place2locx, place2locy);
     //public static final Vector2d placelocation3 = new Vector2d(place3locx, place3locy);
     public static final Pose2d Robot2Beacon= new Pose2d();
-    public static double parkplacex=12;
+    public static double parkplacex=60;
     public static double parkplacey=132;
     public static final Pose2d parkplace = new Pose2d(parkplacex,parkplacey, Math.toRadians(270));
     public static double boardx=36;
     public static double boardy=120;
     public static final Pose2d board = new Pose2d(boardx,boardy, Math.toRadians(90));
-
 }
