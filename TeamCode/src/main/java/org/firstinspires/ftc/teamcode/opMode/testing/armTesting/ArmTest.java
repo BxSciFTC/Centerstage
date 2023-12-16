@@ -11,15 +11,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 @Config
 @TeleOp(name = "ArmTest")
 public class ArmTest extends LinearOpMode {
-    NewArm arm;
-    
+    NewArm2 arm;
 
     private Gamepad gamepad1 = new Gamepad();
 
     private Gamepad gamepad2 = new Gamepad();
 
     public void runOpMode(){
-        arm = new NewArm();
+        arm = new NewArm2();
         arm.init(hardwareMap);
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -39,10 +38,11 @@ public class ArmTest extends LinearOpMode {
     public void run(Gamepad gamepad) {
         gamepad2.copy(gamepad1);
         gamepad1.copy(gamepad);
-        arm.shoulderGoToAngle(shoulder1);
-        arm.elbowGoToAngle(elbow1);
+//        arm.moveTo(shoulder1, elbow1);
 //        arm.shoulder.setTargetPosition(shoulder1);
 //        arm.elbow.setTargetPosition(elbow1);
+        arm.shoulderGoToAngle(shoulder1);
+        arm.elbowGoToAngle(elbow1);
         arm.PIDUpdate();
         
         telemetry.addData("arm.shoulder.getCurrentPosition()", arm.shoulder.getCurrentPosition());
