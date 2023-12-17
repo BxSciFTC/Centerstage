@@ -38,9 +38,7 @@ public class ArmTest extends LinearOpMode {
     public void run(Gamepad gamepad) {
         gamepad2.copy(gamepad1);
         gamepad1.copy(gamepad);
-//        arm.moveTo(shoulder1, elbow1);
-//        arm.shoulder.setTargetPosition(shoulder1);
-//        arm.elbow.setTargetPosition(elbow1);
+
         arm.shoulderGoToAngle(shoulder1);
         arm.elbowGoToAngle(elbow1);
         arm.PIDUpdate();
@@ -51,10 +49,6 @@ public class ArmTest extends LinearOpMode {
         telemetry.addData("elbow1", elbow1);
         telemetry.addData("arm.shoulderTouch.isPressed()", arm.shoulderTouch.isPressed());
         telemetry.addData("arm.elbowTouch.isPressed()", arm.elbowTouch.isPressed());
-//        telemetry.addData("", arm.);
-//        telemetry.addData("", );
-//        telemetry.addData("", );
-//        telemetry.addData("", );
         telemetry.update();
     }
 }
