@@ -11,7 +11,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.teamcode.hardware.Mechanism;
+import org.firstinspires.ftc.teamcode.hardware.RobotConstants;
 
+import static java.lang.Math.cos;
 
 
 @Config
@@ -36,8 +38,12 @@ public class NewArm2 implements Mechanism {
 
     //encoder counts for when the shoulder is at 0 degrees, and the elbow at 180
     //basically the elbow is extended all the way horizontally
-    public static int shoulder0 = 00000;
-    public static int elbow180 = 00000;
+
+    //default 185 degrees
+    public static int shoulder185 = 00000;
+
+    //default reset 11 degrees
+    public static int elbow11 = 00000;
 
 
     public void shoulderGoToAngle(double angle) {
@@ -59,7 +65,7 @@ public class NewArm2 implements Mechanism {
     private int angleToCountShoulder(double angle) {
         double counts = (angle / 360) * CPR;
         //TODO: may be negative sign
-        return negative1 * (int) (shoulder0 + counts);
+        return negative1 * (int) (shoulder185 + counts);
 
     }
 
@@ -68,13 +74,13 @@ public class NewArm2 implements Mechanism {
     private int angleToCountElbow(double angle) {
         double counts = (angle / 360) * CPR;
         //TODO: may be negative sign
-        return negative2 * (int) (elbow180 + counts);
+        return negative2 * (int) (elbow11 + counts);
     }
 
     //gets currents angle of shoulder in degrees
     public double shoulderDegrees() {
         double count = shoulder.getCurrentPosition();
-        count -= shoulder0; //gets amount of ticks from 0 degrees
+        count -= shoulder185; //gets amount of ticks from 0 degrees
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
@@ -87,7 +93,7 @@ public class NewArm2 implements Mechanism {
     //gets current angle of elbow in degrees
     public double elbowDegrees() {
         double count = elbow.getCurrentPosition();
-        count -= elbow180; //gets amount of ticks from 0 degrees
+        count -= elbow11; //gets amount of ticks from 0 degrees
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
@@ -116,8 +122,8 @@ public class NewArm2 implements Mechanism {
         shoulder = hwMap.get(DcMotorEx.class, "shoulder");
         elbow = hwMap.get(DcMotorEx.class, "elbow");
 
-        shoulderTouch = hwMap.get(TouchSensor.class, "ShoulderTouch");
-        elbowTouch = hwMap.get(TouchSensor.class, "ElbowTouch");
+        shoulderTouch = hwMap.get(TouchSensor.class, "shoulderTouch");
+        elbowTouch = hwMap.get(TouchSensor.class, "elbowTouch");
 
         prevShoulderTouch = false;
         prevElbowTouch = false;
@@ -145,7 +151,26 @@ public class NewArm2 implements Mechanism {
         }
     }
 
+    public static double motorFg = 0;
+    public static double elbowFg = 0;
+    public static double shoulderFg = 0;
+
     public double shoulderFF() {
+        double shoulderDegrees = shoulderDegrees();
+        double elbowDegrees = elbowDegrees();
+        double shoulderRadians = Math.toRadians(shoulderDegrees);
+        double elbowRadians = Math.toRadians(elbowDegrees);
+        double angle3 = shoulderRadians-Math.PI;
+        double angle4 = 90 - Math.PI - shoulderRadians - angle3;
+        if (shoulderDegrees >= 0 && shoulderDegrees < 90) {
+            return motorFg*(cos(shoulderRadians))*(RobotConstants.shoulderLen) +
+                    (elbowFg*cos(angle3)) * RobotConstants.shoulderLen / cos(angle4) +
+                    shoulderFg * cos(shoulderRadians) * (RobotConstants.shoulderLen / 2);
+        } else if (shoulderDegrees >= 90 && shoulderDegrees <= 180) {
+            return motorFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
+                    elbowFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
+                    shoulderFg * cos(shoulderRadians);
+        }
         return 0;
     }
 
