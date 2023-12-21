@@ -19,7 +19,7 @@ public class Plane implements Mechanism {
     public void init(HardwareMap hwMap) {
 
         this.hwMap = hwMap;
-        planeMotor = hwMap.get(Servo.class, "planeMotor");
+        planeMotor = hwMap.get(Servo.class, "plane");
         planeState = planeState.OFF;
     }
     public void on(){
