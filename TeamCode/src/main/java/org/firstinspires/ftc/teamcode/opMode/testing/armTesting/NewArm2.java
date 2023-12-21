@@ -34,7 +34,7 @@ public class NewArm2 implements Mechanism {
 
 
     //count per revolution of the absolute encoders
-    public static final double CPR = 3000;
+    public static final double CPR = 537.7;
 
     //encoder counts for when the shoulder is at 0 degrees, and the elbow at 180
     //basically the elbow is extended all the way horizontally
@@ -156,22 +156,23 @@ public class NewArm2 implements Mechanism {
     public static double shoulderFg = 0;
 
     public double shoulderFF() {
-        double shoulderDegrees = shoulderDegrees();
-        double elbowDegrees = elbowDegrees();
-        double shoulderRadians = Math.toRadians(shoulderDegrees);
-        double elbowRadians = Math.toRadians(elbowDegrees);
-        double angle3 = shoulderRadians-Math.PI;
-        double angle4 = 90 - Math.PI - shoulderRadians - angle3;
-        if (shoulderDegrees >= 0 && shoulderDegrees < 90) {
-            return motorFg*(cos(shoulderRadians))*(RobotConstants.shoulderLen) +
-                    (elbowFg*cos(angle3)) * RobotConstants.shoulderLen / cos(angle4) +
-                    shoulderFg * cos(shoulderRadians) * (RobotConstants.shoulderLen / 2);
-        } else if (shoulderDegrees >= 90 && shoulderDegrees <= 180) {
-            return motorFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
-                    elbowFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
-                    shoulderFg * cos(shoulderRadians);
-        }
         return 0;
+//        double shoulderDegrees = shoulderDegrees();
+//        double elbowDegrees = elbowDegrees();
+//        double shoulderRadians = Math.toRadians(shoulderDegrees);
+//        double elbowRadians = Math.toRadians(elbowDegrees);
+//        double angle3 = shoulderRadians-Math.PI;
+//        double angle4 = 90 - Math.PI - shoulderRadians - angle3;
+//        if (shoulderDegrees >= 0 && shoulderDegrees < 90) {
+//            return motorFg*(cos(shoulderRadians))*(RobotConstants.shoulderLen) +
+//                    (elbowFg*cos(angle3)) * RobotConstants.shoulderLen / cos(angle4) +
+//                    shoulderFg * cos(shoulderRadians) * (RobotConstants.shoulderLen / 2);
+//        } else if (shoulderDegrees >= 90 && shoulderDegrees <= 180) {
+//            return motorFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
+//                    elbowFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
+//                    shoulderFg * cos(shoulderRadians);
+//        }
+//        return 0;
     }
 
     public double elbowFF() {

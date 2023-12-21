@@ -45,6 +45,8 @@ public class ArmTest extends LinearOpMode {
         
         telemetry.addData("arm.shoulder.getCurrentPosition()", arm.shoulder.getCurrentPosition());
         telemetry.addData("arm.elbow.getCurrentPosition()", arm.elbow.getCurrentPosition());
+        telemetry.addData("NewArm2.shoulderTarget", NewArm2.shoulderTarget);
+        telemetry.addData("NewArm2.elbowTarget", NewArm2.elbowTarget);
         telemetry.addData("shoulder1", shoulder1);
         telemetry.addData("elbow1", elbow1);
         telemetry.addData("arm.shoulderTouch.isPressed()", arm.shoulderTouch.isPressed());
