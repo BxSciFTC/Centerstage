@@ -27,10 +27,6 @@ public class Robot implements Mechanism {
         claw.init(hwMap);
     }
 
-    public void armShift(double x, double y) {
-        arm.shift(x, y);
-    }
-
     public void update(){
         plane.update();
         claw.update();

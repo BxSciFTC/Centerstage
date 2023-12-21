@@ -48,7 +48,6 @@ public class Claw implements Mechanism {
         double servoAngle = a + 90;
         hingeControler.setPosition(Func.map(servoAngle, -90, 180, -1, 1));
     }
-
 }
 
 

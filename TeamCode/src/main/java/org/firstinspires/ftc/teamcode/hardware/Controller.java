@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 //teleOp class
 public class Controller implements Mechanism {
     Robot robot = new Robot();
+    ElapsedTime timer;
 
     HardwareMap hwMap;
 
@@ -13,11 +15,13 @@ public class Controller implements Mechanism {
     private Gamepad gamepad1 = new Gamepad();
 
     private Gamepad gamepad2 = new Gamepad();
+    public double frequency = 20;
 
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
         robot.init(hwMap);
+        timer = new ElapsedTime();
     }
 
     public void run(Gamepad gamepad) {
@@ -25,13 +29,21 @@ public class Controller implements Mechanism {
         gamepad1.copy(gamepad);
         move();
         planeFly();
-//        score();
-        armMove();
         lift();
-
         clawHingeMove();
         clawMove();
+
+
+        double frequencyTime = 1000.0 / frequency;
+        if (timer.milliseconds() > frequencyTime) {
+            armMove();
+        } else {
+            timer.reset();
+        }
+
+        robot.update();
     }
+
     void lift(){
         if(gamepad1.left_trigger==0.1) {
             robot.lift.liftState= Lift.LiftState.DOWN;
@@ -40,36 +52,28 @@ public class Controller implements Mechanism {
         }else{
             robot.lift.liftState= Lift.LiftState.NORMAL;
         }
-
     }
     void planeFly(){
-        if (gamepad1.left_bumper){
-            robot.plane.planeState= Plane.PlaneState.ON;
-        }else {
-            robot.plane.planeState= Plane.PlaneState.OFF;
+        if (gamepad1.touchpad){
+            robot.plane.fire();
         }
-
     }
 
-//    private void move() {
-//        drive.setWeightedDrivePower(gamepad1);
-//
-//    }
     void armMove() {
         double xShift = 0;
         double yShift = 0;
 
-        if (gamepad1.dpad_up) {
-            xShift += 1;
+        if (gamepad1.dpad_up && !gamepad2.dpad_up) {
+            yShift += 0.2;
         }
-        else if (gamepad1.dpad_down) {
-            xShift -= 1;
-        } else if (gamepad1.triangle) {
-            yShift += 1;
-        }else if (gamepad1.cross) {
-            yShift -= 1;
+        else if (gamepad1.dpad_down && !gamepad2.dpad_down) {
+            yShift -= 0.2;
+        } else if (gamepad1.dpad_left && !gamepad2.dpad_left) {
+            xShift -= 0.2;
+        }else if (gamepad1.dpad_right && !gamepad2.dpad_right) {
+            xShift += 0.2;
         }
-        robot.armShift(xShift, yShift);
+        robot.arm.shift(xShift, yShift);
     }
 
     void clawHingeMove(){ //controls hinge with buttons

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class ClawFSM implements Mechanism {
@@ -41,8 +42,6 @@ public class ClawFSM implements Mechanism {
         hinge = HingeState.THIRTYANGLE;
     }
 
-
-
     public void update() {
         switch (hinge) {
             case ZEROANGLE:
@@ -59,7 +58,4 @@ public class ClawFSM implements Mechanism {
                 clawMechanism.close();
         }
     }
-
-
-
 }

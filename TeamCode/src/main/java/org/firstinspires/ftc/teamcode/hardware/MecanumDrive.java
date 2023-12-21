@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+@Config
 public class MecanumDrive implements Mechanism {
     private HardwareMap hwMap;
 
@@ -36,7 +38,7 @@ public class MecanumDrive implements Mechanism {
 
     //used to fix imperfect strafing
     //TODO: test this value with the driver
-    double STRAFE_INCREASE = 1.1;
+    public static double STRAFE_INCREASE = 1.1;
     //disregard the pose header, only use magnitude
     public void setWeightedDrivePower(Gamepad gamepad) {
         double x = gamepad.left_stick_x * STRAFE_INCREASE;
