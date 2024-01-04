@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -12,105 +14,69 @@ import static java.lang.Math.cos;
 @Config
 public class NewArm implements Mechanism {
     HardwareMap hwMap;
+    DcMotorEx shoulder;
+    DcMotorEx elbow;
+    TouchSensor shoulderTouch;
+    boolean prevShoulderTouch;
+    TouchSensor elbowTouch;
+    boolean prevElbowTouch;
 
-    //absolute encoders will be plugged into same port as motors
-    public DcMotorEx shoulder;
-    public DcMotorEx elbow;
+    private PIDController shoulderController;
+    public static double p1 = 0.01, i1 = 0, d1 = 0, ff1 = 0;
+
+    private PIDController elbowController;
+    public static double p2 = 0.01, i2 = 0, d2 = 0, ff2 = 0;
+
 
     //count per revolution of the absolute encoders
-    public static final double CPR = 8192;
+    public static final double CPR = 537.7;
 
     //encoder counts for when the shoulder is at 0 degrees, and the elbow at 180
     //basically the elbow is extended all the way horizontally
-    public static double shoulder0 = 00000;
-    public static double elbow180 = 00000;
 
+    //default 185 degrees
+    public static int shoulder185 = 272;
 
-    public static double shoulderFg = 0;
-    public static double motorFg = 0;
-    public static double elbowFg = 0;
+    //default reset 11 degrees
+    public static int elbow11 = 116;
 
-
-    public static double shoulderkP = 0;
-    public static double shoulderkI = 0;
-    public static double shoulderkD = 0;
-
-
-    public static double elbowkP = 0;
-    public static double elbowkI = 0;
-    public static double elbowkD = 0;
-
-    //remember to keep updating feedforward
-    PIDFController shoulderController = new PIDFController(shoulderkP, shoulderkI, shoulderkD, getShoulderT());
-
-    PIDFController elbowController = new PIDFController(shoulderkP, shoulderkI, shoulderkD, getShoulderT());
-
-    boolean isReached = false;
-
-    int tolerance = 10;
-
-    @Override
-    public void init(HardwareMap hwMap) {
-        this.hwMap = hwMap;
-        shoulder = hwMap.get(DcMotorEx.class, "shoulder");
-        elbow = hwMap.get(DcMotorEx.class, "elbow");
-        //DO NOT RESET THE ENCODERS, WE WANT TO MAINTAIN POSITION
-        shoulder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        elbow.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        shoulderController.setTolerance(tolerance);
-        elbowController.setTolerance(tolerance);
-    }
 
     public void shoulderGoToAngle(double angle) {
-        int prevPos = shoulder.getCurrentPosition();
-        if (angleToCountShoulder(angle) == prevPos) return;
-        int target = angleToCountShoulder(angle);
+        shoulderPos = shoulder.getCurrentPosition();
+        if (angleToCountShoulder(angle) == shoulderPos) return;
+        shoulderTarget = angleToCountShoulder(angle);
 
-        shoulder.setTargetPosition(target);
+
     }
 
     public void elbowGoToAngle(double angle) {
-        int prevPos = elbow.getCurrentPosition();
-        if (angleToCountElbow(angle) == prevPos) return;
-        int target = angleToCountShoulder(angle);
-
-        elbow.setTargetPosition(target);
-    }
-
-    public void PIDUpdate() {
-        PIDUpdateShoulder();
-        PIDUpdateElbow();
-    }
-
-    public void PIDUpdateShoulder() {
-        shoulderController.setF(getShoulderT());
-    }
-
-    public void PIDUpdateElbow() {
-        shoulderController.setF(getElbowT());
+        elbowPos = elbow.getCurrentPosition();
+        if (angleToCountElbow(angle) == elbowPos) return;
+        elbowTarget = angleToCountElbow(angle);
     }
 
     public static int negative1 = 1;
+
     private int angleToCountShoulder(double angle) {
-        double counts = (angle/360)*CPR;
+        double counts = (angle / 360) * CPR;
         //TODO: may be negative sign
-        return negative1*(int)(shoulder0 + counts);
+        return negative1 * (int) (shoulder185 + counts);
 
     }
 
     public static int negative2 = 1;
+
     private int angleToCountElbow(double angle) {
-        double counts = (angle/360)*CPR;
+        double counts = (angle / 360) * CPR;
         //TODO: may be negative sign
-        return negative2*(int)(elbow180 + counts);
+        return negative2 * (int) (elbow11 + counts);
     }
 
     //gets currents angle of shoulder in degrees
     public double shoulderDegrees() {
         double count = shoulder.getCurrentPosition();
-        count -= shoulder0; //gets amount of ticks from 0 degrees
+        count -= shoulder185;
+        count = -count;
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
@@ -123,7 +89,7 @@ public class NewArm implements Mechanism {
     //gets current angle of elbow in degrees
     public double elbowDegrees() {
         double count = elbow.getCurrentPosition();
-        count -= shoulder0; //gets amount of ticks from 0 degrees
+        count = -count;
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
@@ -133,50 +99,99 @@ public class NewArm implements Mechanism {
         return count;
     }
 
-    public double shoulderRadians() {
-        return Math.toRadians(shoulderDegrees());
+
+    public static int shoulderTarget = 0;
+    public static int elbowTarget = 0;
+    public int shoulderPos = 0;
+    public int elbowPos = 0;
+
+    public double power1 = 0;
+    public double power2 = 0;
+
+
+    @Override
+    public void init(HardwareMap hwMap) {
+        this.hwMap = hwMap;
+        shoulderController = new PIDController(p1, i1, d1);
+        elbowController = new PIDController(p2, i2, d2);
+
+        shoulder = hwMap.get(DcMotorEx.class, "shoulder");
+        elbow = hwMap.get(DcMotorEx.class, "elbow");
+
+        shoulderTouch = hwMap.get(TouchSensor.class, "shoulderTouch");
+        elbowTouch = hwMap.get(TouchSensor.class, "elbowTouch");
+
+        prevShoulderTouch = false;
+        prevElbowTouch = false;
     }
 
-    public double elbowRadians() {
-        return Math.toRadians(elbowDegrees());
-    }
+    public void PIDUpdate() {
+        shoulderController.setPID(p1, i1, d1);
+        elbowController.setPID(p2, i2, d2);
 
-    //can choose whether of not to use provided inputs, doesn't matter
-    public double getShoulderT() {
-        double shoulderDegrees = shoulderDegrees();
-        double elbowDegrees = elbowDegrees();
-        double shoulderRadians = shoulderRadians();
-        double elbowRadians = elbowRadians();
-        double angle3 = shoulderRadians-Math.PI;
-        double angle4 = 90 - Math.PI - shoulderRadians - angle3;
-        if (shoulderDegrees >= 0 && shoulderDegrees < 90) {
-            return motorFg*(cos(shoulderRadians))*(RobotConstants.shoulderLen) +
-                    (elbowFg*cos(angle3)) * RobotConstants.shoulderLen / cos(angle4) +
-                    shoulderFg * cos(shoulderRadians) * (RobotConstants.shoulderLen / 2);
-        } else if (shoulderDegrees >= 90 && shoulderDegrees <= 180) {
-            return motorFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
-                    elbowFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
-                    shoulderFg * cos(shoulderRadians);
+        power1 = shoulderController.calculate(shoulderPos, shoulderTarget);
+        shoulder.setPower(power1 + shoulderFF());
+
+        power2 = elbowController.calculate(elbowPos, elbowTarget);
+        elbow.setPower(power2 + elbowFF());
+
+        if (shoulderTouch.isPressed()) {
+            calibrateShoulder();
+        } else {
+            prevShoulderTouch = false;
         }
-        return 0;
+        if (elbowTouch.isPressed()) {
+            calibrateElbow();
+        } else {
+            prevElbowTouch = false;
+        }
     }
 
+    public static double motorFg = 0;
+    public static double elbowFg = 0;
+    public static double shoulderFg = 0;
 
-    //can choose whether of not to use provided inputs, doesn't matter
-    public double getElbowT() {
-        double shoulderDegrees = shoulderDegrees();
-        double elbowDegrees = elbowDegrees();
+    public double shoulderFF() {
+        double downAngle = shoulderDegrees();
+        return ff1 * cos(Math.toRadians(downAngle));
+//        double shoulderDegrees = shoulderDegrees();
+//        double elbowDegrees = elbowDegrees();
+//        double shoulderRadians = Math.toRadians(shoulderDegrees);
+//        double elbowRadians = Math.toRadians(elbowDegrees);
+//        double angle3 = shoulderRadians-Math.PI;
+//        double angle4 = 90 - Math.PI - shoulderRadians - angle3;
+//        if (shoulderDegrees >= 0 && shoulderDegrees < 90) {
+//            return motorFg*(cos(shoulderRadians))*(RobotConstants.shoulderLen) +
+//                    (elbowFg*cos(angle3)) * RobotConstants.shoulderLen / cos(angle4) +
+//                    shoulderFg * cos(shoulderRadians) * (RobotConstants.shoulderLen / 2);
+//        } else if (shoulderDegrees >= 90 && shoulderDegrees <= 180) {
+//            return motorFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
+//                    elbowFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
+//                    shoulderFg * cos(shoulderRadians);
+//        }
+//        return 0;
+    }
 
-        //simulates polar axis
-        double angleFromDown = elbowDegrees - (90 - shoulderDegrees) - 90;
-        return RobotConstants.elbowLen * elbowFg * cos(angleFromDown * Math.PI / 180);
+    public double elbowFF() {
+        double downAngle = shoulderDegrees() + elbowDegrees() - 180;
+        return ff2 * cos(Math.toRadians(downAngle));
     }
 
     public void calibrateShoulder() {
-        shoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        if (prevShoulderTouch == false) {
+            shoulder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            shoulder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            prevShoulderTouch = true;
+        } else
+            return;
     }
 
-    public void elbowShoulder() {
-        elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public void calibrateElbow() {
+        if (prevElbowTouch == false) {
+            elbow.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            elbow.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            prevElbowTouch = true;
+        } else
+            return;
     }
 }

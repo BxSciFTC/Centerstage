@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import static java.lang.Math.cos;
 
 @Config
-public class Arm implements Mechanism {
+public class DepreciatedArm implements Mechanism {
     HardwareMap hwMap;
 
     //absolute encoders will be plugged into same port as motors

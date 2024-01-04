@@ -19,18 +19,18 @@ import static java.lang.Math.cos;
 @Config
 public class NewArm2 implements Mechanism {
     HardwareMap hwMap;
-    DcMotorEx shoulder;
-    DcMotorEx elbow;
+    public static DcMotorEx shoulder;
+    public static DcMotorEx elbow;
     TouchSensor shoulderTouch;
     boolean prevShoulderTouch;
     TouchSensor elbowTouch;
     boolean prevElbowTouch;
 
     private PIDController shoulderController;
-    public static double p1 = 0.01, i1 = 0, d1 = 0;
+    public static double p1 = 0.01, i1 = 0, d1 = 0, ff1 = 0;
 
     private PIDController elbowController;
-    public static double p2 = 0.01, i2 = 0, d2 = 0;
+    public static double p2 = 0.01, i2 = 0, d2 = 0, ff2 = 0;
 
 
     //count per revolution of the absolute encoders
@@ -40,10 +40,10 @@ public class NewArm2 implements Mechanism {
     //basically the elbow is extended all the way horizontally
 
     //default 185 degrees
-    public static int shoulder185 = 00000;
+    public static int shoulder185 = 272;
 
     //default reset 11 degrees
-    public static int elbow11 = 00000;
+    public static int elbow11 = 116;
 
 
     public void shoulderGoToAngle(double angle) {
@@ -80,7 +80,8 @@ public class NewArm2 implements Mechanism {
     //gets currents angle of shoulder in degrees
     public double shoulderDegrees() {
         double count = shoulder.getCurrentPosition();
-        count -= shoulder185; //gets amount of ticks from 0 degrees
+        count -= shoulder185;
+        count = -count;
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
@@ -93,7 +94,7 @@ public class NewArm2 implements Mechanism {
     //gets current angle of elbow in degrees
     public double elbowDegrees() {
         double count = elbow.getCurrentPosition();
-        count -= elbow11; //gets amount of ticks from 0 degrees
+        count = -count;
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
@@ -156,7 +157,8 @@ public class NewArm2 implements Mechanism {
     public static double shoulderFg = 0;
 
     public double shoulderFF() {
-        return 0;
+        double downAngle = shoulderDegrees();
+        return ff1 * cos(Math.toRadians(downAngle));
 //        double shoulderDegrees = shoulderDegrees();
 //        double elbowDegrees = elbowDegrees();
 //        double shoulderRadians = Math.toRadians(shoulderDegrees);
@@ -176,7 +178,8 @@ public class NewArm2 implements Mechanism {
     }
 
     public double elbowFF() {
-        return 0;
+        double downAngle = shoulderDegrees() + elbowDegrees() - 180;
+        return ff2 * cos(Math.toRadians(downAngle));
     }
 
     public void calibrateShoulder() {

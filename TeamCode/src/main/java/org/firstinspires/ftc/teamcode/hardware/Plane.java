@@ -17,7 +17,7 @@ public class Plane implements Mechanism {
 
     @Override
     public void init(HardwareMap hwMap) {
-
+        timer = new ElapsedTime();
         this.hwMap = hwMap;
         planeServo = hwMap.get(Servo.class, "plane");
 //        planeState = planeState.OFF;

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.teamcode.opMode.testing.armTesting.NewArm2;
 
 import static java.lang.Math.*;
 
@@ -8,7 +9,7 @@ import static java.lang.Math.*;
 //formulaic mapping of motors and angles to x y coordinate
 public class ArmMapper implements Mechanism {
 
-    NewArm arm = new NewArm();
+    public NewArm arm;
     HardwareMap hwMap;
 
     //is q1 angle in the model
@@ -16,67 +17,57 @@ public class ArmMapper implements Mechanism {
     public static double elbowAngle;
 
 
-    //is q2 angle in the model
-    public static double elbowDownAngle;
-    public static double x, y;
+    //is q2 angle in the model, i.e. acute angle between 2 lengths
+    public double elbowDownAngle;
+
+    public double xPos, yPos;
+
 
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
+        arm = new NewArm();
         arm.init(hwMap);
-        shoulderAngle = arm.shoulderDegrees();
-        elbowAngle = arm.elbowDegrees();
-        elbowDownAngle = 180 - elbowAngle;
 
-        //x, y
-        double shoulderAngleDegrees = Math.toRadians(shoulderAngle);
-        double vector1[] = {RobotConstants.shoulderLen*cos(shoulderAngleDegrees), RobotConstants.shoulderLen*sin(shoulderAngleDegrees)};
-        double trueElbowAngle = elbowAngle - (90 - shoulderAngle) - 90;
-        double trueElbowAngleDegrees = elbowAngle - (90 - shoulderAngle) - 90;
-        double vector2[] = {RobotConstants.elbowLen*cos(trueElbowAngleDegrees), RobotConstants.elbowLen*sin(trueElbowAngleDegrees)};
-        x = vector1[0] + vector2[0];
-        y = vector1[1] + vector2[1];
+        xPos = 0;
+        yPos = 20;
     }
     /*
         Forward is positive x
         Up is positive y
     */
 
-    public void moveTo(double x, double y) {
-        double[] angles = calculateAngle(x, y);
+    public void moveTo(double x1, double y1) {
+        double[] angles = calculateAngle(x1, y1);
 
-        if (strainedAngles(angles)) return;
+//        if (strainedAngles(angles)) return;
 
         shoulderAngle = angles[0];
         elbowAngle = angles[1];
         elbowDownAngle = angles[2];
-        arm.shoulderGoToAngle(shoulderAngle);
-        arm.elbowGoToAngle(elbowAngle);
-        this.x = x;
-        this.y = y;
+
+        this.xPos = x1;
+        this.yPos = y1;
     }
 
-    public void shift(double x, double y) {
-        double newX = isInRange(this.x + x, y) ? this.x + x : x;
-        double newY = isInRange(newX, this.y + y) ? this.y + y : y;
-        double[] angles = calculateAngle(newX,newY);
+    public void shift(double x1, double y1) {
+        double newX = isInRange(xPos + x1, yPos) ? xPos + x1 : xPos;
+        double newY = isInRange(newX, yPos + y1) ? yPos + y1 : yPos;
 
-        if (strainedAngles(angles)) return;
+        this.xPos = newX;
+        this.yPos = newY;
 
-        shoulderAngle = angles[0];
-        elbowAngle = angles[1];
-        elbowDownAngle = angles[2];
-        arm.shoulderGoToAngle(shoulderAngle);
-        arm.elbowGoToAngle(elbowAngle);
+        moveTo(newX, newY);
+    }
 
-        this.x =  newX;
-        this.y = newY;
+    public void doThing() {
+        this.xPos -= 4;
     }
 
     //tells if coordinate is outside the range of motion of the two arms(a circle shape)
     public boolean isInRange(double x, double y) {
-        double totalLen = RobotConstants.shoulderLen+RobotConstants.elbowLen;
-        return !(x > cos(atan(y / x)) * totalLen || y > sin(atan(y / x)) * totalLen);
+        double totalLen = RobotConstants.shoulderLen + RobotConstants.elbowLen;
+        return !(abs(x) > abs(cos(atan2(y, x))) * totalLen || abs(y) > abs(sin(atan2(y, x)))* totalLen);
     }
 
     //we keep q1 bounded 0-90 and 180-q2 bounded 0-180
@@ -85,6 +76,8 @@ public class ArmMapper implements Mechanism {
     }
 
     public void PIDUpdate() {
+        arm.shoulderGoToAngle(shoulderAngle);
+        arm.elbowGoToAngle(elbowAngle);
         arm.PIDUpdate();
     }
 
@@ -97,13 +90,12 @@ public class ArmMapper implements Mechanism {
                 (pow(x, 2) + pow(y, 2) - pow(a, 2) - pow(b, 2))/
                         (2 * a * b)
         );
-        double shoulderAngle = atan(y / x) + atan(
+        double shoulderAngle = atan(y / x) +atan (
                 (b * sin(armAngle)) /
                         (a + b * cos(armAngle))
 
         );
         //q1, angle between arms, and q2 in the model
-        return new double[] {shoulderAngle, 180-armAngle, armAngle};
+        return new double[] {Math.toDegrees(shoulderAngle), 180-Math.toDegrees(armAngle),Math.toDegrees(armAngle)};
     }
-
 }
