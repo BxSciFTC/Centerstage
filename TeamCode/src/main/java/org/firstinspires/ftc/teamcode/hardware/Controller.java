@@ -38,7 +38,7 @@ public class Controller implements Mechanism {
         move();
         planeFly();
         lift();
-        clawHingeMove();
+//        clawHingeMove();
         clawMove();
 
 
@@ -91,21 +91,27 @@ public class Controller implements Mechanism {
         robot.arm.shift(xShift, yShift);
     }
 
-    void clawHingeMove(){ //controls hinge with buttons
-        if(gamepadFirst1.square && !gamepadFirst2.square){
-            robot.claw.setThirtyAngle();
-        }
-        if(gamepadFirst1.circle && !gamepadFirst2.circle){
-            robot.claw.setZeroAngle();
-        }
-        robot.claw.update();
-    }
+//    void clawHingeMove(){ //controls hinge with buttons
+//        if(gamepadFirst1.square && !gamepadFirst2.square){
+//            robot.claw.setThirtyAngle();
+//        }
+//        if(gamepadFirst1.circle && !gamepadFirst2.circle){
+//            robot.claw.setZeroAngle();
+//        }
+//        robot.claw.update();
+//    }
     void clawMove(){ //controls open and close with buttons
-        if(gamepadFirst1.right_bumper && !gamepadFirst2.right_bumper){
+        if(gamepadFirst1.left_bumper && !gamepadFirst2.left_bumper){
             robot.claw.leftOpen();
         }
         else{
             robot.claw.leftClose();
+        }
+        if(gamepadFirst1.right_bumper && !gamepadFirst2.right_bumper){
+            robot.claw.rightOpen();
+        }
+        else{
+            robot.claw.rightClose();
         }
         robot.claw.update();
     }
