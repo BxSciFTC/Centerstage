@@ -21,30 +21,30 @@ public class ArmClawFSM implements Mechanism {
     }
 
     public void openClaw() {
-        claw.open();
+        claw.leftOpen();
     }
     public void closeClaw() {
-        claw.close();
+        claw.leftClose();
     }
 
     public void floorOpen() {
         arm.moveTo(100000000, 10000000);
-        claw.open();
+        claw.leftOpen();
     }
 
     public void placeInBasket() {
         arm.moveTo(100000000, 10000000);
         arm.moveTo(100000000, 10000000);
-        claw.open();
+        claw.leftOpen();
         arm.moveTo(100000000, 10000000);
     }
 
     public void takeOutofBasket() {
         arm.moveTo(100000000, 10000000);
         arm.moveTo(100000000, 10000000);
-        claw.open();
+        claw.leftOpen();
         arm.moveTo(100000000, 10000000);
-        claw.close();
+        claw.leftClose();
         arm.moveTo(100000000, 10000000);
     }
     public void update(){

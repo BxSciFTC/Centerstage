@@ -8,18 +8,27 @@ public class ClawFSM implements Mechanism {
     HardwareMap hwMap;
     Claw clawMechanism = new Claw();
 
-    public enum ClawState {
+    public LeftClawState leftClawState;
+    public enum LeftClawState {
         OPEN,
         CLOSE,
     }
 
+    public RightClawState rightClawState;
+    public enum RightClawState {
+        OPEN,
+        CLOSE,
+    }
+
+
+    public HingeState hinge;
     public enum HingeState {
         ZEROANGLE,
         THIRTYANGLE,
     }
 
-    public ClawState clawS;
-    public HingeState hinge;
+
+
 
     public static double switchHinge = 10;
 
@@ -27,15 +36,22 @@ public class ClawFSM implements Mechanism {
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
         clawMechanism.init(hwMap);
-        clawS = ClawState.OPEN;
+        leftClawState = LeftClawState.OPEN;
         hinge = HingeState.ZEROANGLE;
     }
 
-    public void open(){
-        clawS = ClawState.OPEN;
+    public void leftOpen(){
+        leftClawState = LeftClawState.OPEN;
     }
-    public void close(){
-        clawS = ClawState.CLOSE;
+    public void leftClose(){
+        leftClawState = LeftClawState.CLOSE;
+    }
+
+    public void rightOpen(){
+        rightClawState = rightClawState.OPEN;
+    }
+    public void rightClose(){
+        rightClawState = rightClawState.CLOSE;
     }
 
     public void setZeroAngle(){
@@ -52,6 +68,7 @@ public class ClawFSM implements Mechanism {
         else{
             setThirtyAngle();
         }
+
         switch (hinge) {
             case ZEROANGLE:
                 clawMechanism.zeroAngleConstant();
@@ -60,11 +77,17 @@ public class ClawFSM implements Mechanism {
                 clawMechanism.thirtyAngleConstant();
                 break;
         }
-        switch (clawS) {
+        switch (leftClawState) {
             case OPEN:
-                clawMechanism.open();
+                clawMechanism.leftOpen();
             case CLOSE:
-                clawMechanism.close();
+                clawMechanism.leftClose();
+        }
+        switch (rightClawState) {
+            case OPEN:
+                clawMechanism.rightOpen();
+            case CLOSE:
+                clawMechanism.rightClose();
         }
     }
 }

@@ -15,7 +15,7 @@ public class TeleOpMain extends LinearOpMode {
         telemetry.update();
         waitForStart();
         while(opModeIsActive()) {
-            bot.run(gamepad1);
+            bot.run(gamepad1, gamepad2);
         }
         telemetry.addData("TeleOpMain", "boop2");
         telemetry.update();

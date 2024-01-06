@@ -2,9 +2,7 @@ package org.firstinspires.ftc.teamcode.opMode.testing;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.hardware.Claw;
 import org.firstinspires.ftc.teamcode.hardware.ClawFSM;
 
 @Config
@@ -25,10 +23,10 @@ public class ServoTest extends LinearOpMode {
 
     void clawMove(){ //controls open and close with buttons
         if(gamepad1.right_bumper){
-            claw.open();
+            claw.leftOpen();
         }
         else{
-            claw.close();
+            claw.leftClose();
         }
         claw.update();
     }

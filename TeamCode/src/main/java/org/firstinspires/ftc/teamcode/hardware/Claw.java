@@ -7,32 +7,47 @@ import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Claw implements Mechanism {
     HardwareMap hwMap;
-    Servo clawController;
+    Servo leftClawController;
+    Servo rightClawController;
     Servo hingeController;
 
     public static double elbowAngle;
     public static double shoulderAngle;
 
-    public static double open = 0.5;
-    public static double close = -0.5;
+    public static double open1 = 0.5;
+    public static double close1 = -0.5;
 
-    boolean isOpen;
+    public static double open2 = 0.5;
+    public static double close2 = -0.5;
+
+    boolean leftIsOpen = false;
+    boolean rightIsOpen = false;
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
-        clawController = hwMap.get(Servo.class, "claw");
+        leftClawController = hwMap.get(Servo.class, "claw");
         hingeController = hwMap.get(Servo.class, "hinge");
         elbowAngle = ArmMapper.elbowAngle;
         shoulderAngle = ArmMapper.shoulderAngle;
     }
-    public void open() {
-        clawController.setPosition(open);
-        isOpen = true;
+    public void leftOpen() {
+        leftClawController.setPosition(open1);
+        leftIsOpen = true;
     }
 
-    public void close() {
-        clawController.setPosition(close);
-        isOpen = false;
+    public void leftClose() {
+        leftClawController.setPosition(close1);
+        leftIsOpen = false;
+    }
+
+    public void rightOpen() {
+        rightClawController.setPosition(open2);
+        rightIsOpen = true;
+    }
+
+    public void rightClose() {
+        rightClawController.setPosition(close2);
+        rightIsOpen = false;
     }
 
     public void thirtyAngleConstant(){
