@@ -20,7 +20,7 @@ public class ArmMapper implements Mechanism {
     //is q2 angle in the model, i.e. acute angle between 2 lengths
     public double elbowDownAngle;
 
-    public double xPos, yPos;
+    public static double xPos, yPos;
 
 
     @Override
