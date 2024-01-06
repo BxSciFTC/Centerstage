@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+@Config
 public class ClawFSM implements Mechanism {
     HardwareMap hwMap;
     Claw clawMechanism = new Claw();
@@ -19,6 +20,8 @@ public class ClawFSM implements Mechanism {
 
     public ClawState clawS;
     public HingeState hinge;
+
+    public static double switchHinge = 10;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -43,6 +46,12 @@ public class ClawFSM implements Mechanism {
     }
 
     public void update() {
+        if(ArmMapper.yPos < switchHinge){
+            setZeroAngle();
+        }
+        else{
+            setThirtyAngle();
+        }
         switch (hinge) {
             case ZEROANGLE:
                 clawMechanism.zeroAngleConstant();
