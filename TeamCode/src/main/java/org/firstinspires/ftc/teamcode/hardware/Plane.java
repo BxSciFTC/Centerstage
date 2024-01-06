@@ -12,8 +12,8 @@ public class Plane implements Mechanism {
     ElapsedTime timer;
 
 
-    public static double restore = 0;
-    public static double release = 0;
+    public static double restore = 0.6;
+    public static double release = 1;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -29,7 +29,7 @@ public class Plane implements Mechanism {
     }
 
     public void update() {
-        if (timer.milliseconds() > 1500) {
+        if (timer.milliseconds() > 1200) {
             planeServo.setPosition(restore);
         }
     }

@@ -52,6 +52,11 @@ public class Controller implements Mechanism {
         }else{
             robot.lift.liftState= Lift.LiftState.NORMAL;
         }
+        if (gamepad1.dpad_left && !gamepad2.dpad_left) {
+            robot.lift.liftServoState = Lift.LiftServoState.UP;
+        } else if (gamepad1.dpad_right && !gamepad2.dpad_right) {
+            robot.lift.liftServoState = Lift.LiftServoState.DOWN;
+        }
     }
     void planeFly(){
         if (gamepad1.touchpad){

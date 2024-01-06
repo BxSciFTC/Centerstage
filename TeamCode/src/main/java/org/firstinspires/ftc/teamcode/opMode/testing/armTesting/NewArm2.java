@@ -80,8 +80,7 @@ public class NewArm2 implements Mechanism {
     //gets currents angle of shoulder in degrees
     public double shoulderDegrees() {
         double count = shoulder.getCurrentPosition();
-        count -= shoulder185;
-        count = -count;
+        count = shoulder185 - count;
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
