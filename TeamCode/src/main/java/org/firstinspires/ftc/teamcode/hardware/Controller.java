@@ -53,9 +53,9 @@ public class Controller implements Mechanism {
     }
 
     void lift() {
-        if(gamepadSecond1.a && !gamepadSecond2.a) {
+        if(gamepadSecond1.a) {
             robot.lift.liftState= Lift.LiftState.DOWN;
-        }else if (gamepadSecond1.y && !gamepadSecond2.y){
+        }else if (gamepadSecond1.y){
             robot.lift.liftState= Lift.LiftState.UP;
         }else{
             robot.lift.liftState= Lift.LiftState.NORMAL;

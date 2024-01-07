@@ -25,7 +25,8 @@ public class Claw implements Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
-        leftClawController = hwMap.get(Servo.class, "claw");
+        leftClawController = hwMap.get(Servo.class, "leftClaw");
+        rightClawController = hwMap.get(Servo.class, "rightClaw");
         hingeController = hwMap.get(Servo.class, "hinge");
         elbowAngle = ArmMapper.elbowAngle;
         shoulderAngle = ArmMapper.shoulderAngle;
