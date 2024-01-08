@@ -37,6 +37,7 @@ public class ClawFSM implements Mechanism {
         this.hwMap = hwMap;
         clawMechanism.init(hwMap);
         leftClawState = LeftClawState.OPEN;
+        rightClawState=RightClawState.OPEN;
         hinge = HingeState.ZEROANGLE;
     }
 
