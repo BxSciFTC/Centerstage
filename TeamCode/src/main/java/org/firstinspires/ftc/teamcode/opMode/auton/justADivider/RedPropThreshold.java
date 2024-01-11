@@ -16,13 +16,13 @@ public class RedPropThreshold implements VisionProcessor {
     String outStr = "left"; //Set a default value in case vision does not work
 
     static final Rect LEFT_RECTANGLE = new Rect(
-            new Point(0, 0),
-            new Point(0, 0)
+            new Point(0, 100),
+            new Point(100, 0)
     );
 
     static final Rect RIGHT_RECTANGLE = new Rect(
-            new Point(0, 0),
-            new Point(0, 0)
+            new Point(200, 200),
+            new Point(300, 200)
     );
 
     @Override
@@ -39,7 +39,7 @@ public class RedPropThreshold implements VisionProcessor {
         Scalar lowHSVRedUpper = new Scalar(10, 255, 255);
 
         Scalar redHSVRedLower = new Scalar(160, 100, 20); //Wraps around Color Wheel
-        Scalar highHSVRedUpper = new Scalar(180, 255, 255);
+            Scalar highHSVRedUpper = new Scalar(180, 255, 255);
 
         Core.inRange(testMat, lowHSVRedLower, lowHSVRedUpper, lowMat);
         Core.inRange(testMat, redHSVRedLower, highHSVRedUpper, highMat);
