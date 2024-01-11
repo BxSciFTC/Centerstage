@@ -20,6 +20,7 @@ import static java.lang.Math.cos;
 public class NewArm2 implements Mechanism {
     HardwareMap hwMap;
     public static DcMotorEx shoulder;
+    public static DcMotorEx shoulder2;
     public static DcMotorEx elbow;
     TouchSensor shoulderTouch;
     boolean prevShoulderTouch;
@@ -120,6 +121,7 @@ public class NewArm2 implements Mechanism {
         elbowController = new PIDController(p2, i2, d2);
 
         shoulder = hwMap.get(DcMotorEx.class, "shoulder");
+        shoulder2 = hwMap.get(DcMotorEx.class, "shoulder2");
         elbow = hwMap.get(DcMotorEx.class, "elbow");
 
         shoulderTouch = hwMap.get(TouchSensor.class, "shoulderTouch");
@@ -135,6 +137,7 @@ public class NewArm2 implements Mechanism {
 
         power1 = shoulderController.calculate(shoulderPos, shoulderTarget);
         shoulder.setPower(power1 + shoulderFF());
+        shoulder2.setPower(power1 + shoulderFF());
 
         power2 = elbowController.calculate(elbowPos, elbowTarget);
         elbow.setPower(power2 + elbowFF());

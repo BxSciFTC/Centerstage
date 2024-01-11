@@ -8,13 +8,13 @@ public class ClawFSM implements Mechanism {
     HardwareMap hwMap;
     Claw clawMechanism = new Claw();
 
-    public LeftClawState leftClawState;
+    public LeftClawState leftClawState = LeftClawState.CLOSE;
     public enum LeftClawState {
         OPEN,
         CLOSE,
     }
 
-    public RightClawState rightClawState;
+    public RightClawState rightClawState = RightClawState.CLOSE;
     public enum RightClawState {
         OPEN,
         CLOSE,
@@ -56,7 +56,7 @@ public class ClawFSM implements Mechanism {
     }
 
     public void setZeroAngle(){
-        hinge = HingeState.ZEROANGLE; //BRYAN THIS JUST SETS THE STATE, IT DOES NOT DO ANYTHING to change the servo POSTION. IF YOU CHANGE MY FUNNY CODE I WILL COMMIT COOKIE..
+        hinge = HingeState.ZEROANGLE;
     }
     public void setThirtyAngle(){
         hinge = HingeState.THIRTYANGLE;
@@ -81,14 +81,18 @@ public class ClawFSM implements Mechanism {
         switch (leftClawState) {
             case OPEN:
                 clawMechanism.leftOpen();
+                break;
             case CLOSE:
                 clawMechanism.leftClose();
+                break;
         }
         switch (rightClawState) {
             case OPEN:
                 clawMechanism.rightOpen();
+                break;
             case CLOSE:
                 clawMechanism.rightClose();
+                break;
         }
     }
 }

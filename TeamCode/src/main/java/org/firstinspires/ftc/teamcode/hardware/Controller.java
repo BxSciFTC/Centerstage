@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.teamcode.opMode.teleOp.TeleOpMain;
 
 //teleOp class
 public class Controller implements Mechanism {
@@ -101,19 +102,23 @@ public class Controller implements Mechanism {
 //        robot.claw.update();
 //    }
     void clawMove(){ //controls open and close with buttons
-        if(gamepadFirst1.left_bumper && !gamepadFirst2.left_bumper){
+        TeleOpMain.tele.addData("claw move", "x");
+        if(gamepadFirst1.left_bumper){
             robot.claw.leftOpen();
+            TeleOpMain.tele.addData("claw move open", "y");
         }
         else{
             robot.claw.leftClose();
+            TeleOpMain.tele.addData("claw close", "z");
         }
-        if(gamepadFirst1.right_bumper && !gamepadFirst2.right_bumper){
+        if(gamepadFirst1.right_bumper){
             robot.claw.rightOpen();
         }
         else{
             robot.claw.rightClose();
         }
         robot.claw.update();
+        TeleOpMain.tele.update();
     }
 
     void move() {

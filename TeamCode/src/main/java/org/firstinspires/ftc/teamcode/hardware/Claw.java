@@ -14,11 +14,11 @@ public class Claw implements Mechanism {
     public static double elbowAngle;
     public static double shoulderAngle;
 
-    public static double open1 = 0.5;
-    public static double close1 = -0.5;
+    public static double open1 = 1;
+    public static double close1 = 0;
 
-    public static double open2 = 0.5;
-    public static double close2 = -0.5;
+    public static double open2 = 1;
+    public static double close2 = 0;
 
     boolean leftIsOpen = false;
     boolean rightIsOpen = false;
@@ -26,7 +26,8 @@ public class Claw implements Mechanism {
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
         leftClawController = hwMap.get(Servo.class, "leftClaw");
-        rightClawController = hwMap.get(Servo.class, "rightClaw");
+        rightClawController =
+                hwMap.get(Servo.class, "rightClaw");
         hingeController = hwMap.get(Servo.class, "hinge");
         elbowAngle = ArmMapper.elbowAngle;
         shoulderAngle = ArmMapper.shoulderAngle;
