@@ -43,6 +43,11 @@ public class Pipeline extends OpenCvPipeline {
         } if (color == "blue") {
             lowHSV = new Scalar(110, 50, 50);
             highHSV = new Scalar(120, 255, 255);
+        } if (color == "CUSTOMCHOOSELATER") {
+            lowHSV = new Scalar(110, 50, 50);
+            highHSV = new Scalar(120, 255, 255);
+            //https://medium.com/programming-fever/how-to-find-hsv-range-of-an-object-for-computer-vision-applications-254a8eb039fc
+            //to find HSV values u want
         }
 
         ROI1 = new Rect(1, 1, 213, 479);
