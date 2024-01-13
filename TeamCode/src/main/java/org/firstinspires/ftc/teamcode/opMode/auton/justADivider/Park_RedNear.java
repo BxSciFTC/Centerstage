@@ -14,16 +14,20 @@ import org.firstinspires.ftc.teamcode.opMode.auton.RedNearTrapConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 public class Park_RedNear extends LinearOpMode {
-    SampleMecanumDrive drive;
+
     ElapsedTime timer;
     //ArmClawFSM deposit = new ArmClawFSM();
     @Override
     public void runOpMode() throws InterruptedException {
-        drive = new SampleMecanumDrive(hardwareMap);
+
         DcMotor leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
         DcMotor leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
         DcMotor rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
         DcMotor rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        leftRear.setDirection(DcMotor.Direction.REVERSE);
+        rightRear.setDirection(DcMotor.Direction.REVERSE);
         //deposit.init(hardwareMap);
 
 
@@ -32,7 +36,7 @@ public class Park_RedNear extends LinearOpMode {
 
 
         while (opModeIsActive() && !isStopRequested()) {
-            drive.update();
+
             leftFront.setPower(0.5);
             leftRear.setPower(-0.5);
             rightFront.setPower((-0.5));
