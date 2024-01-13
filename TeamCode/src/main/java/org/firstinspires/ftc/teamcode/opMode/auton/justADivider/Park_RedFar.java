@@ -16,15 +16,19 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "Park_redF")
 public class Park_RedFar extends LinearOpMode {
 
-    DcMotor leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-    DcMotor leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-    DcMotor rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-    DcMotor rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+    private DcMotorEx leftFront;
+    private DcMotorEx leftRear;
+    private DcMotorEx rightFront;
+    private DcMotorEx rightRear;
+
     //ArmClawFSM deposit = new ArmClawFSM();
     @Override
     public void runOpMode() throws InterruptedException {
 
-
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 

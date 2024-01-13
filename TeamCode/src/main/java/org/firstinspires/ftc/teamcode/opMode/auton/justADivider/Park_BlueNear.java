@@ -15,16 +15,19 @@ import org.firstinspires.ftc.teamcode.opMode.auton.BlueNearTrapConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "Park_blueN")
 public class Park_BlueNear extends LinearOpMode {
+    private DcMotorEx leftFront;
+    private DcMotorEx leftRear;
+    private DcMotorEx rightFront;
+    private DcMotorEx rightRear;
 
-    DcMotor leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-    DcMotor leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-    DcMotor rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-    DcMotor rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
     //ArmClawFSM deposit = new ArmClawFSM();
     @Override
     public void runOpMode() throws InterruptedException {
 
-
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+       leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+         rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
+         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 

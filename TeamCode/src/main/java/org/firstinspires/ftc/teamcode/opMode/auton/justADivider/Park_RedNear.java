@@ -17,16 +17,20 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 public class Park_RedNear extends LinearOpMode {
 
 
-    DcMotor leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-    DcMotor leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-    DcMotor rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
-    DcMotor rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+    private DcMotorEx leftFront;
+    private DcMotorEx leftRear;
+    private DcMotorEx rightFront;
+    private DcMotorEx rightRear;
+
     //ArmClawFSM deposit = new ArmClawFSM();
     @Override
     public void runOpMode() throws InterruptedException {
 
-
-      leftRear.setDirection(DcMotor.Direction.REVERSE);
+        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
+        leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+        rightRear = hardwareMap.get(DcMotorEx.class, "rightRear");
+        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftRear.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 
         leftFront.setPower(0.5);
