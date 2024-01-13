@@ -41,7 +41,7 @@ public class Park_RedFar extends LinearOpMode {
             leftRear.setPower(-0.5);
             rightFront.setPower((-0.5));
             rightRear.setPower((0.5));
-            if(timer.milliseconds()>4000){
+            if(timer.milliseconds()>14000){
                 leftFront.setPower(0);
                 leftRear.setPower(-0);
                 rightFront.setPower((-0));

@@ -40,7 +40,7 @@ public class Park_BlueNear extends LinearOpMode {
             leftRear.setPower(0.5);
             rightFront.setPower((0.5));
             rightRear.setPower((-0.5));
-            if(timer.milliseconds()>2000){
+            if(timer.milliseconds()>12000){
                 leftFront.setPower(0);
                 leftRear.setPower(-0);
                 rightFront.setPower((-0));
