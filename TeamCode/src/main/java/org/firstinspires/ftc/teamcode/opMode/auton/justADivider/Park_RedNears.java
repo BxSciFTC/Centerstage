@@ -5,16 +5,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.opMode.auton.BlueFarTrapConstants;
-import org.firstinspires.ftc.teamcode.opMode.auton.BlueNearTrapConstants;
 
-
-
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-
-@Autonomous(name = "right6+")
-public class Park_BlueNear extends LinearOpMode {
+@Autonomous(name = "leftfff")
+public class Park_RedNears extends LinearOpMode {
     DcMotor leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
     DcMotor leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
     DcMotor rightFront = hardwareMap.get(DcMotorEx.class, "rightRear");
@@ -27,10 +20,10 @@ public class Park_BlueNear extends LinearOpMode {
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 
-        leftFront.setPower(0.5);
-        leftRear.setPower(-0.5);
-        rightFront.setPower(-0.5);
-        rightRear.setPower(0.5);
+        leftFront.setPower(-0.5);
+        leftRear.setPower(0.5);
+        rightFront.setPower(0.5);
+        rightRear.setPower(-0.5);
         wait(3000);
 
         while (opModeIsActive() && !isStopRequested()) {
