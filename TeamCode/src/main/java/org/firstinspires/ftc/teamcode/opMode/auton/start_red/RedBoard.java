@@ -12,12 +12,12 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 //need to update with constants
 public class RedBoard extends LinearOpMode {
     SampleMecanumDrive drive;
-    ArmClawFSM deposit = new ArmClawFSM();
+    //ArmClawFSM deposit = new ArmClawFSM();
 
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
-        deposit.init(hardwareMap);
+        //deposit.init(hardwareMap);
 
         TrajectorySequence lets_go = drive.trajectorySequenceBuilder(RedNearCornerConstants.start)
                 .forward(28)

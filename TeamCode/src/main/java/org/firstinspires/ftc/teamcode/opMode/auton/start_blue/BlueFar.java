@@ -10,12 +10,12 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 //need to update with constants
 @Autonomous(name = "BlueFar", group = "_Auto")
 public class BlueFar extends LinearOpMode {
-    ArmClawFSM deposit = new ArmClawFSM();
+    //ArmClawFSM deposit = new ArmClawFSM();
     SampleMecanumDrive drive;
     @Override
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
-        deposit.init(hardwareMap);
+        //deposit.init(hardwareMap);
 
         TrajectorySequence move = drive.trajectorySequenceBuilder(BlueFarCornerConstants.start)
                 .forward(28)
