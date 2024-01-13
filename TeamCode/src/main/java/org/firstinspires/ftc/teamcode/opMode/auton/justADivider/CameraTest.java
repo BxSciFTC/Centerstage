@@ -18,7 +18,7 @@ public class CameraTest extends LinearOpMode {
 //    DcMotor leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
 //    DcMotor rightFront = hardwareMap.get(DcMotorEx.class, "rightRear");
 //    DcMotor rightRear = hardwareMap.get(DcMotorEx.class, "rightFront");
-
+//
 //    leftFront.setPower((y + x + rx) /denominator);
 //    leftRear.setPower((y - x + rx)  /denominator);
 //    rightFront.setPower((y - x - rx)/denominator);
