@@ -130,10 +130,10 @@ public class NewArm implements Mechanism {
         elbowController.setPID(p2, i2, d2);
 
         power1 = shoulderController.calculate(shoulderPos, shoulderTarget);
-        shoulder.setPower(power1 + shoulderFF());
+//        shoulder.setPower(power1 + shoulderFF());
 
         power2 = elbowController.calculate(elbowPos, elbowTarget);
-        elbow.setPower(power2 + elbowFF());
+//        elbow.setPower(power2 + elbowFF());
 
         if (shoulderTouch.isPressed()) {
             calibrateShoulder();

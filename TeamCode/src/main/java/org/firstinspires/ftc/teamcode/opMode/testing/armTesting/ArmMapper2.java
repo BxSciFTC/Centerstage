@@ -63,6 +63,14 @@ public class ArmMapper2 implements Mechanism {
         moveTo(newX, newY);
     }
 
+    public void collectPixels() {
+
+    }
+
+    public void score1Spot() {
+
+    }
+
     public void doThing() {
         this.xPos -= 4;
     }

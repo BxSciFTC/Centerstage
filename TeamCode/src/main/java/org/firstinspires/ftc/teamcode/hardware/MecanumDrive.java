@@ -26,7 +26,7 @@ public class MecanumDrive implements Mechanism {
         rightRear = hwMap.get(DcMotorEx.class, "rightRear");
         rightFront = hwMap.get(DcMotorEx.class, "rightFront");
 
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
+//        leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftRear.setDirection(DcMotor.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -41,10 +41,10 @@ public class MecanumDrive implements Mechanism {
     public static double STRAFE_INCREASE = 1.1;
     //disregard the pose header, only use magnitude
     public void setWeightedDrivePower(Gamepad gamepad) {
-        double x = gamepad.left_stick_x * STRAFE_INCREASE;
+        double x = -gamepad.left_stick_x * STRAFE_INCREASE;
 
         //may or may not need to flip this sign - +
-        double y = -gamepad.left_stick_y;
+        double y = gamepad.left_stick_y;
 
         //right stick controls turning
         double rx = gamepad.right_stick_x;

@@ -26,7 +26,7 @@ public class MecanumDriveOld {
         rightRear = hwMap.get(DcMotorEx.class, "rightRear");
         rightFront = hwMap.get(DcMotorEx.class, "rightFront");
 
-        leftFront.setDirection(DcMotor.Direction.REVERSE);
+//        leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftRear.setDirection(DcMotor.Direction.REVERSE);
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -39,7 +39,7 @@ public class MecanumDriveOld {
     //used to fix imperfect strafing
     //TODO: test this value with the driver
     double STRAFE_INCREASE = 1.1;
-    public static int neg1 = 1;
+    public static int neg1 = -1;
     public static int neg2 = 1;
     public static int neg3 = 1;
     public static int neg4 = 1;
