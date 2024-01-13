@@ -31,21 +31,22 @@ public class Park_BlueNear extends LinearOpMode {
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 
-        while(timer.milliseconds()<2000){
+        while(timer.milliseconds()<4000){
 
         }
-        while(timer.milliseconds()<5000) {
-            leftFront.setPower(0.5);
-            leftRear.setPower(-0.5);
-            rightFront.setPower(-0.5);
-            rightRear.setPower(0.5);
-        }
+        leftFront.setPower(0.5);
+        leftRear.setPower(-0.5);
+        rightFront.setPower(-0.5);
+        rightRear.setPower(0.5);
+        while(timer.milliseconds()<6000) {
 
+        }
+        leftFront.setPower(0);
+        leftRear.setPower(0);
+        rightFront.setPower(0);
+        rightRear.setPower(0);
         while (opModeIsActive() && !isStopRequested()) {
-            leftFront.setPower(0);
-            leftRear.setPower(0);
-            rightFront.setPower(0);
-            rightRear.setPower(0);
+
         }
     }
 }
