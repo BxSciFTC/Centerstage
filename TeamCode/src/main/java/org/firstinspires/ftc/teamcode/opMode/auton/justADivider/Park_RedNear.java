@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "Park_redN")
 public class Park_RedNear extends LinearOpMode {
 
-
+    ElapsedTime timer;
     private DcMotorEx leftFront;
     private DcMotorEx leftRear;
     private DcMotorEx rightFront;
@@ -33,11 +33,15 @@ public class Park_RedNear extends LinearOpMode {
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 
-        leftFront.setPower(0.5);
-        leftRear.setPower(-0.5);
-        rightFront.setPower(-0.5);
-        rightRear.setPower(0.5);
-        wait(3000);
+        while(timer.milliseconds()<2000){
+
+        }
+        while(timer.milliseconds()<5000) {
+            leftFront.setPower(0.5);
+            leftRear.setPower(-0.5);
+            rightFront.setPower(-0.5);
+            rightRear.setPower(0.5);
+        }
 
         while (opModeIsActive() && !isStopRequested()) {
             leftFront.setPower(0);

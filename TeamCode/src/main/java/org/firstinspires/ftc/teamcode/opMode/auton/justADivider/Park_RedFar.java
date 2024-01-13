@@ -15,12 +15,11 @@ import org.firstinspires.ftc.teamcode.opMode.auton.RedNearTrapConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "Park_redF")
 public class Park_RedFar extends LinearOpMode {
-
+    ElapsedTime timer;
     private DcMotorEx leftFront;
     private DcMotorEx leftRear;
     private DcMotorEx rightFront;
     private DcMotorEx rightRear;
-
     //ArmClawFSM deposit = new ArmClawFSM();
     @Override
     public void runOpMode() throws InterruptedException {
@@ -31,18 +30,22 @@ public class Park_RedFar extends LinearOpMode {
         rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
+        while(timer.milliseconds()<2000){
 
-        leftFront.setPower(0.5);
-        leftRear.setPower(-0.5);
-        rightFront.setPower(-0.5);
-        rightRear.setPower(0.5);
-        wait(3000);
-
-        while (opModeIsActive() && !isStopRequested()) {
-            leftFront.setPower(0);
-            leftRear.setPower(0);
-            rightFront.setPower(0);
-            rightRear.setPower(0);
         }
+        while(timer.milliseconds()<5000) {
+            leftFront.setPower(0.5);
+            leftRear.setPower(-0.5);
+            rightFront.setPower(-0.5);
+            rightRear.setPower(0.5);
+        }
+
+            while (opModeIsActive() && !isStopRequested()) {
+                leftFront.setPower(0);
+                leftRear.setPower(0);
+                rightFront.setPower(0);
+                rightRear.setPower(0);
+            }
+
     }
 }

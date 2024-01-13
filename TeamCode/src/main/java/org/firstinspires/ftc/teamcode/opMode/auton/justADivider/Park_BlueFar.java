@@ -18,7 +18,7 @@ public class Park_BlueFar extends LinearOpMode {
     private DcMotorEx leftRear;
     private DcMotorEx rightFront;
     private DcMotorEx rightRear;
-
+    ElapsedTime timer;
     //ArmClawFSM deposit = new ArmClawFSM();
     @Override
     public void runOpMode() throws InterruptedException {
@@ -30,11 +30,15 @@ public class Park_BlueFar extends LinearOpMode {
         leftRear.setDirection(DcMotor.Direction.REVERSE);
         waitForStart();
 
-        leftFront.setPower(-0.5);
-        leftRear.setPower(0.5);
-        rightFront.setPower(0.5);
-        rightRear.setPower(-0.5);
-        wait(3000);
+        while(timer.milliseconds()<2000){
+
+        }
+        while(timer.milliseconds()<5000) {
+            leftFront.setPower(0.5);
+            leftRear.setPower(-0.5);
+            rightFront.setPower(-0.5);
+            rightRear.setPower(0.5);
+        }
 
         while (opModeIsActive() && !isStopRequested()) {
             leftFront.setPower(0);
