@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opMode.auton.justADivider;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.opMode.auton.BlueFarTrapConstants;
@@ -14,6 +15,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 public class Park_RedNear extends LinearOpMode {
     SampleMecanumDrive drive;
+    ElapsedTime timer;
     //ArmClawFSM deposit = new ArmClawFSM();
     @Override
     public void runOpMode() throws InterruptedException {
@@ -35,6 +37,12 @@ public class Park_RedNear extends LinearOpMode {
             leftRear.setPower(-0.5);
             rightFront.setPower((-0.5));
             rightRear.setPower((0.5));
+            if(timer.milliseconds()>2000){
+                leftFront.setPower(0);
+                leftRear.setPower(-0);
+                rightFront.setPower((-0));
+                rightRear.setPower((0));
+            }
         }
     }
 }
