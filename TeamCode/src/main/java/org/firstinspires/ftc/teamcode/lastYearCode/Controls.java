@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Controls {
 
-    public MecanumDrive drive;
+    public MecanumDriveOld drive;
 
     //1 is current gamepad, 2 is previous iteration
     private Gamepad gamepad1 = new Gamepad();
@@ -13,7 +13,7 @@ public class Controls {
     private Gamepad gamepad2 = new Gamepad();
 
     public void init(HardwareMap hwMap) {
-        drive = new MecanumDrive(hwMap);
+        drive = new MecanumDriveOld(hwMap);
     }
 
     public void run(Gamepad gamepad) {

@@ -23,7 +23,7 @@ public class Pipeline extends OpenCvPipeline {
     Scalar highHSV;
     Rect ROI1, ROI2, ROI3;
     double region1Percent, region2Percent, region3Percent;
-    int region;
+    int region = 999;
 
     Rect leftRect = new Rect(1, 1, 213, 479);
     Rect midRect = new Rect(214, 1, 213, 479);
@@ -38,10 +38,10 @@ public class Pipeline extends OpenCvPipeline {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
         if (color == "red") {
-            lowHSV = new Scalar(160, 50, 50);
-            highHSV = new Scalar(180, 255, 255);
+            lowHSV = new Scalar(0, 70, 50);
+            highHSV = new Scalar(10, 255, 255);
         } if (color == "blue") {
-            lowHSV = new Scalar(110, 50, 50);
+            lowHSV = new Scalar(90, 134, 21);
             highHSV = new Scalar(120, 255, 255);
         } if (color == "CUSTOMCHOOSELATER") {
             lowHSV = new Scalar(110, 50, 50);

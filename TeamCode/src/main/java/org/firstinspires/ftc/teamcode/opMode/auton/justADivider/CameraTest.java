@@ -12,12 +12,12 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 public class CameraTest extends LinearOpMode {
     Camera camera;
     int region = 1;
-    Robot robot;
+//    Robot robot;
 
-    DcMotor leftFront = hardwareMap.get(DcMotorEx .class, "leftFront");
-    DcMotor leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
-    DcMotor rightFront = hardwareMap.get(DcMotorEx.class, "rightRear");
-    DcMotor rightRear = hardwareMap.get(DcMotorEx.class, "rightFront");
+//    DcMotor leftFront = hardwareMap.get(DcMotorEx .class, "leftFront");
+//    DcMotor leftRear = hardwareMap.get(DcMotorEx.class, "leftRear");
+//    DcMotor rightFront = hardwareMap.get(DcMotorEx.class, "rightRear");
+//    DcMotor rightRear = hardwareMap.get(DcMotorEx.class, "rightFront");
 
 //    leftFront.setPower((y + x + rx) /denominator);
 //    leftRear.setPower((y - x + rx)  /denominator);
@@ -27,13 +27,23 @@ public class CameraTest extends LinearOpMode {
 
     @Override
     public void runOpMode()  {
-        robot = new Robot();
-        robot.init(hardwareMap);
+//        robot = new Robot();
+//        robot.init(hardwareMap);
 
 
-        camera = new Camera();
+        camera = new Camera("blue");
 
         camera.init(hardwareMap);
+
+
+
+        waitForStart();
+
+        while (opModeIsActive() && !isStopRequested()) {
+            region = camera.whichRegion();
+            telemetry.addData("Region: ", region);
+            telemetry.update();
+        }
 
 
         while (opModeIsActive() && isStopRequested()) {
@@ -41,20 +51,14 @@ public class CameraTest extends LinearOpMode {
             telemetry.addData("Region: ", region);
             telemetry.update();
         }
-        waitForStart();
         camera.stopStreaming();
+
         if (region == 1) {
             //left
         } else if (region == 3) {
             //right
         } else {
             //middle
-        }
-
-        while (opModeIsActive() && !isStopRequested()) {
-
-            telemetry.addData("Region: ", region);
-            telemetry.update();
         }
     }
 }

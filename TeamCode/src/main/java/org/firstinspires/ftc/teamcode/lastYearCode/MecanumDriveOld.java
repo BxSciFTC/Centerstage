@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @Config
-public class MecanumDrive {
+public class MecanumDriveOld {
     private HardwareMap hwMap;
 
     private DcMotorEx leftFront;
@@ -15,7 +15,7 @@ public class MecanumDrive {
     private DcMotorEx rightFront;
     private DcMotorEx rightRear;
 
-    public MecanumDrive(HardwareMap hwMap) {
+    public MecanumDriveOld(HardwareMap hwMap) {
         this.hwMap = hwMap;
         init();
     }
@@ -23,8 +23,8 @@ public class MecanumDrive {
     private void init() {
         leftFront = hwMap.get(DcMotorEx.class, "leftFront");
         leftRear = hwMap.get(DcMotorEx.class, "leftRear");
-        rightFront = hwMap.get(DcMotorEx.class, "rightRear");
-        rightRear = hwMap.get(DcMotorEx.class, "rightFront");
+        rightRear = hwMap.get(DcMotorEx.class, "rightRear");
+        rightFront = hwMap.get(DcMotorEx.class, "rightFront");
 
         leftFront.setDirection(DcMotor.Direction.REVERSE);
         leftRear.setDirection(DcMotor.Direction.REVERSE);

@@ -36,7 +36,7 @@ public class Controller implements Mechanism {
         gamepadSecond2.copy(gamepadSecond1);
         gamepadSecond1.copy(gamepad2);
 
-        move();
+        move(gamepad1);
         planeFly();
         lift();
 //        clawHingeMove();
@@ -102,14 +102,14 @@ public class Controller implements Mechanism {
 //        robot.claw.update();
 //    }
     void clawMove(){ //controls open and close with buttons
-        TeleOpMain.tele.addData("claw move", "x");
+//        TeleOpMain.tele.addData("claw move", "x");
         if(gamepadFirst1.left_bumper){
             robot.claw.leftOpen();
-            TeleOpMain.tele.addData("claw move open", "y");
+//            TeleOpMain.tele.addData("claw move open", "y");
         }
         else{
             robot.claw.leftClose();
-            TeleOpMain.tele.addData("claw close", "z");
+//            TeleOpMain.tele.addData("claw close", "z");
         }
         if(gamepadFirst1.right_bumper){
             robot.claw.rightOpen();
@@ -118,11 +118,11 @@ public class Controller implements Mechanism {
             robot.claw.rightClose();
         }
         robot.claw.update();
-        TeleOpMain.tele.update();
+//        TeleOpMain.tele.update();
     }
 
-    void move() {
-        robot.drive.setWeightedDrivePower(gamepadFirst1);
+    void move(Gamepad gamepad1) {
+        robot.drive.setWeightedDrivePower(gamepad1);
     }
 }
 
