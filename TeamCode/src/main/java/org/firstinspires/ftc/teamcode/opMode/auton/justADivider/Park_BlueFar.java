@@ -17,13 +17,13 @@ public class Park_BlueFar extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
         //deposit.init(hardwareMap);
-        wait(10000);
+
         TrajectorySequence move = drive.trajectorySequenceBuilder(BlueFarTrapConstants.start)
                 .strafeLeft(96)
                 .build();
 
         waitForStart();
-
+        wait(10000);
         drive.followTrajectorySequenceAsync(move);
 
         while (opModeIsActive() && !isStopRequested()) {

@@ -17,13 +17,13 @@ public class Park_BlueNear extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         drive = new SampleMecanumDrive(hardwareMap);
         //deposit.init(hardwareMap);
-        wait(10000);
+
         TrajectorySequence move = drive.trajectorySequenceBuilder(BlueNearTrapConstants.start)
                 .strafeLeft(48)
                 .build();
 
         waitForStart();
-
+        wait(10000);
         drive.followTrajectorySequenceAsync(move);
 
         while (opModeIsActive() && !isStopRequested()) {
