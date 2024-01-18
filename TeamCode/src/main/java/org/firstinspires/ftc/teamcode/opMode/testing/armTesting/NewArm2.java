@@ -44,38 +44,40 @@ public class NewArm2 implements Mechanism {
     public static int shoulder185 = 272;
 
     //default reset 11 degrees
-    public static int elbow11 = 116;
+    public static int elbow11 = 80;
+
+    public static int shoulderPower = 0;
+
+    public static int elbowPower = 0;
 
 
     public void shoulderGoToAngle(double angle) {
-        shoulderPos = shoulder.getCurrentPosition();
-        if (angleToCountShoulder(angle) == shoulderPos) return;
         shoulderTarget = angleToCountShoulder(angle);
-
-
     }
 
     public void elbowGoToAngle(double angle) {
-        elbowPos = elbow.getCurrentPosition();
-        if (angleToCountElbow(angle) == elbowPos) return;
         elbowTarget = angleToCountElbow(angle);
     }
 
-    public static int negative1 = 1;
+//    public static int negative1 = 1;
 
     private int angleToCountShoulder(double angle) {
         double counts = (angle / 360) * CPR;
-        //TODO: may be negative sign
-        return negative1 * (int) (shoulder185 + counts);
 
+        counts = shoulder185 - counts;
+
+        //TODO: may be negative sign
+        return (int) (counts);
     }
 
-    public static int negative2 = 1;
 
     private int angleToCountElbow(double angle) {
         double counts = (angle / 360) * CPR;
+
+        counts = elbow11 - counts - shoulder.getCurrentPosition();
+
         //TODO: may be negative sign
-        return negative2 * (int) (elbow11 + counts);
+        return (int) (counts);
     }
 
     //gets currents angle of shoulder in degrees
@@ -94,7 +96,8 @@ public class NewArm2 implements Mechanism {
     //gets current angle of elbow in degrees
     public double elbowDegrees() {
         double count = elbow.getCurrentPosition();
-        count = -count;
+
+        count = elbow11 - count - shoulder.getCurrentPosition();
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
@@ -105,8 +108,8 @@ public class NewArm2 implements Mechanism {
     }
 
 
-    public static int shoulderTarget = 0;
-    public static int elbowTarget = 0;
+    public static int shoulderTarget = shoulder185;
+    public static int elbowTarget = elbow11;
     public int shoulderPos = 0;
     public int elbowPos = 0;
 
@@ -135,13 +138,18 @@ public class NewArm2 implements Mechanism {
         shoulderController.setPID(p1, i1, d1);
         elbowController.setPID(p2, i2, d2);
 
-        power1 = shoulderController.calculate(shoulderPos, shoulderTarget);
-        shoulder.setPower(power1 + shoulderFF());
-        shoulder2.setPower(power1 + shoulderFF());
+        shoulderPos = shoulder.getCurrentPosition();
+        elbowPos = elbow.getCurrentPosition();
 
-        power2 = elbowController.calculate(elbowPos, elbowTarget);
-        elbow.setPower(power2 + elbowFF());
+        double powerShoulder = shoulderController.calculate(shoulderPos, shoulderTarget);
+        shoulder.setPower(shoulderPower*(powerShoulder + shoulderFF()));
+        shoulder2.setPower(shoulderPower*(powerShoulder + shoulderFF()));
 
+        double powerElbow = elbowController.calculate(elbowPos, elbowTarget);
+        elbow.setPower(elbowPower*(powerElbow + elbowFF()));
+
+
+        //FIX ELBOW CALIBRATE IS INCORRECT WHILE SHOULDER IS NOT ZERO
         if (shoulderTouch.isPressed()) {
             calibrateShoulder();
         } else {
@@ -154,9 +162,9 @@ public class NewArm2 implements Mechanism {
         }
     }
 
-    public static double motorFg = 0;
-    public static double elbowFg = 0;
-    public static double shoulderFg = 0;
+//    public static double motorFg = 0;
+//    public static double elbowFg = 0;
+//    public static double shoulderFg = 0;
 
     public double shoulderFF() {
         double downAngle = shoulderDegrees();
