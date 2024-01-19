@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.teamcode.hardware.Mechanism;
 import org.firstinspires.ftc.teamcode.hardware.RobotConstants;
 
-import static java.lang.Math.cos;
+import static java.lang.Math.*;
 
 
 @Config
@@ -44,11 +44,11 @@ public class NewArm2 implements Mechanism {
     public static int shoulder185 = 272;
 
     //default reset 11 degrees
-    public static int elbow11 = 80;
+    public static int elbow11 = 39;
 
-    public static int shoulderPower = 0;
+    public static double shoulderPower = 0;
 
-    public static int elbowPower = 0;
+    public static double elbowPower = 0;
 
 
     public void shoulderGoToAngle(double angle) {
@@ -74,7 +74,7 @@ public class NewArm2 implements Mechanism {
     private int angleToCountElbow(double angle) {
         double counts = (angle / 360) * CPR;
 
-        counts = elbow11 - counts - shoulder.getCurrentPosition();
+        counts = -elbow11 + counts - shoulder.getCurrentPosition();
 
         //TODO: may be negative sign
         return (int) (counts);
@@ -97,8 +97,8 @@ public class NewArm2 implements Mechanism {
     public double elbowDegrees() {
         double count = elbow.getCurrentPosition();
 
-        count = elbow11 - count - shoulder.getCurrentPosition();
-
+        count = elbow11 + count + shoulder.getCurrentPosition();
+        //easter egg
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
         count /= CPR; //gets # of revolutions
@@ -112,9 +112,6 @@ public class NewArm2 implements Mechanism {
     public static int elbowTarget = elbow11;
     public int shoulderPos = 0;
     public int elbowPos = 0;
-
-    public double power1 = 0;
-    public double power2 = 0;
 
 
     @Override
@@ -166,9 +163,31 @@ public class NewArm2 implements Mechanism {
 //    public static double elbowFg = 0;
 //    public static double shoulderFg = 0;
 
+    public static double weight1 = 1;
+    public static double weight2 = 1;
+    public static double COMAngle = 0;
+
     public double shoulderFF() {
-        double downAngle = shoulderDegrees();
-        return ff1 * cos(Math.toRadians(downAngle));
+//        double downAngle = shoulderDegrees();
+//        return ff1 * cos(Math.toRadians(downAngle));
+        double shoulderAngle = shoulderDegrees();
+        double downAngle = shoulderDegrees() + elbowDegrees() - 180;
+
+        //shoulder COM
+        double x1 = RobotConstants.shoulderLen * cos(shoulderAngle) / 2;
+        double y1 = RobotConstants.shoulderLen * sin(shoulderAngle) / 2;
+
+        //elbow COM
+        double x2 = (2 * x1) + (RobotConstants.elbowLen * cos(downAngle) / 2);
+        double y2 = (2 * y1) + (RobotConstants.elbowLen * sin(downAngle) / 2);
+
+        double COMx = (weight1 * x1 + weight2 * x2) / 2;
+        double COMy = (weight1 * y1 + weight2 * y2) / 2;
+
+        COMAngle = atan2(COMy, COMx);
+
+        return ff1 * cos(COMAngle);
+
 //        double shoulderDegrees = shoulderDegrees();
 //        double elbowDegrees = elbowDegrees();
 //        double shoulderRadians = Math.toRadians(shoulderDegrees);

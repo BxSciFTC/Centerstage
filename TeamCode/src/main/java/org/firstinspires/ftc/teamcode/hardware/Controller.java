@@ -78,7 +78,6 @@ public class Controller implements Mechanism {
         double yShift = 0;
 
         //PRESETS
-
         if (gamepadFirst1.triangle && !gamepadFirst2.triangle) {
             yShift += 0.2;
         }

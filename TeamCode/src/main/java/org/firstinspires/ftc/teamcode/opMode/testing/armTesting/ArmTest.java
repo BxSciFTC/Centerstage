@@ -32,7 +32,7 @@ public class ArmTest extends LinearOpMode {
     }
     
     public static int shoulder1 = 0;
-    public static int elbow1 = 0;
+    public static int elbow1 = 27;
     
     
     public void run(Gamepad gamepad) {
@@ -53,6 +53,8 @@ public class ArmTest extends LinearOpMode {
         telemetry.addData("arm.elbowTouch.isPressed()", arm.elbowTouch.isPressed());
         telemetry.addData("arm.shoulderDegrees()", arm.shoulderDegrees());
         telemetry.addData("arm.elbowDegrees()", arm.elbowDegrees());
+        telemetry.addData("arm.COMAngle", arm.COMAngle);
+
         telemetry.update();
     }
 }

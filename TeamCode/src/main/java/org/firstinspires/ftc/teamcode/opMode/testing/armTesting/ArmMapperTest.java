@@ -30,8 +30,8 @@ public class ArmMapperTest extends LinearOpMode {
         }
     }
 
-    public static double mapX = 14.14;
-    public static double mapY = 14.14;
+    public static double mapX = 0;
+    public static double mapY = 10;
 
 
     public void run(Gamepad gamepad) {

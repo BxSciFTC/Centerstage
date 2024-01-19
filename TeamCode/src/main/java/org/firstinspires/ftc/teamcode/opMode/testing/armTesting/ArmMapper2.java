@@ -63,7 +63,11 @@ public class ArmMapper2 implements Mechanism {
         moveTo(newX, newY);
     }
 
-    public void collectPixels() {
+    public void collectPixels1() {
+
+    }
+
+    public void rest() {
 
     }
 
@@ -81,10 +85,10 @@ public class ArmMapper2 implements Mechanism {
         return !(abs(x) > abs(cos(atan2(y, x))) * totalLen || abs(y) > abs(sin(atan2(y, x)))* totalLen);
     }
 
-    //we keep q1 bounded 0-90 and 180-q2 bounded 0-180
-    public boolean strainedAngles(double[] angles) {
-        return (angles[0] < 0 || angles[0] > 90 || angles[1] > 180 || angles[1] < 10);
-    }
+//    //we keep q1 bounded 0-90 and 180-q2 bounded 0-180
+//    public boolean strainedAngles(double[] angles) {
+//        return (angles[0] < 0 || angles[0] > 90 || angles[1] > 180 || angles[1] < 10);
+//    }
 
     public void PIDUpdate() {
         arm.shoulderGoToAngle(shoulderAngle);
