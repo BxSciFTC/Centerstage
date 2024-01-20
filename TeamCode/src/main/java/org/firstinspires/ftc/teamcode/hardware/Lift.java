@@ -18,9 +18,13 @@ public class Lift implements Mechanism {
     HardwareMap hwMap;
     DcMotorEx lift;
     Servo liftServo;
-    public static double upPos = 0, downPos = 1;
+
+    Servo stopServo;
+    public static double upPos = 0, downPos = 1, openPos = 0, closePos = 1;
 
     LiftState liftState;
+
+    ElapsedTime timer;
 
     public enum LiftState {
         UP,
@@ -35,16 +39,20 @@ public class Lift implements Mechanism {
         DOWN,
     }
 
+    LiftServoState prevServoState = LiftServoState.UP;
+
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
         lift = hwMap.get(DcMotorEx.class, "lift");
         liftServo = hwMap.get(Servo.class, "liftServo");
+        stopServo = hwMap.get(Servo.class, "stopServo");
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftState = LiftState.NORMAL;
         liftServoState = LiftServoState.UP;
+        timer.startTime();
     }
 
     public void setPower(double power) {
@@ -52,6 +60,9 @@ public class Lift implements Mechanism {
     }
 
     public void update(){
+        if (liftServoState != prevServoState) {
+            timer.reset();
+        }
         switch (liftState){
             case UP:
                 lift.setPower(1);
@@ -67,8 +78,13 @@ public class Lift implements Mechanism {
         switch (liftServoState) {
             case UP:
                 liftServo.setPosition(upPos);
+                while (timer.milliseconds() <= 1000) {}
+                stopServo.setPosition(closePos);
                 break;
             case DOWN:
+                timer.reset();
+                stopServo.setPosition(openPos);
+                while (timer.milliseconds() <= 1000) {}
                 liftServo.setPosition(downPos);
                 break;
         }
