@@ -8,37 +8,34 @@ public class ClawFSM implements Mechanism {
     HardwareMap hwMap;
     Claw clawMechanism = new Claw();
 
-    public LeftClawState leftClawState = LeftClawState.CLOSE;
+    public LeftClawState leftClawState;
     public enum LeftClawState {
         OPEN,
         CLOSE,
     }
 
-    public RightClawState rightClawState = RightClawState.CLOSE;
+    public RightClawState rightClawState;
     public enum RightClawState {
         OPEN,
         CLOSE,
     }
 
-
-    public HingeState hinge;
+    public HingeState hingeState;
     public enum HingeState {
         ZEROANGLE,
         THIRTYANGLE,
+        REST,
     }
 
-
-
-
-    public static double switchHinge = 10;
+    public static double switchHinge = 6;
 
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
         clawMechanism.init(hwMap);
-        leftClawState = LeftClawState.OPEN;
-        rightClawState=RightClawState.OPEN;
-        hinge = HingeState.ZEROANGLE;
+        leftClawState = LeftClawState.CLOSE;
+        rightClawState= RightClawState.CLOSE;
+        hingeState = HingeState.ZEROANGLE;
     }
 
     public void leftOpen(){
@@ -56,26 +53,37 @@ public class ClawFSM implements Mechanism {
     }
 
     public void setZeroAngle(){
-        hinge = HingeState.ZEROANGLE;
+        hingeState = HingeState.ZEROANGLE;
     }
     public void setThirtyAngle(){
-        hinge = HingeState.THIRTYANGLE;
+        hingeState = HingeState.THIRTYANGLE;
+    }
+    public void setRestAngle() {
+        hingeState = HingeState.REST;
     }
 
     public void update() {
-        if(ArmMapper.yPos < switchHinge){
-            setZeroAngle();
-        }
-        else{
-            setThirtyAngle();
+        clawMechanism.update();
+
+        if (hingeState == HingeState.REST) {
+
+        } else {
+            if (ArmMapper.yPos < switchHinge) {
+                setZeroAngle();
+            } else {
+                setThirtyAngle();
+            }
         }
 
-        switch (hinge) {
+        switch (hingeState) {
             case ZEROANGLE:
-                clawMechanism.zeroAngleConstant();
+                clawMechanism.zeroAngleVariable();
                 break;
             case THIRTYANGLE:
-                clawMechanism.thirtyAngleConstant();
+                clawMechanism.thirtyAngleVariable();
+                break;
+            case REST:
+                clawMechanism.restAngleConstant();
                 break;
         }
         switch (leftClawState) {

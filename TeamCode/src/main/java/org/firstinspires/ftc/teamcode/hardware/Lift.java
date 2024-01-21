@@ -39,7 +39,7 @@ public class Lift implements Mechanism {
         DOWN,
     }
 
-    LiftServoState prevServoState = LiftServoState.UP;
+    LiftServoState prevServoState;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -52,7 +52,8 @@ public class Lift implements Mechanism {
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         liftState = LiftState.NORMAL;
         liftServoState = LiftServoState.UP;
-        timer.startTime();
+        prevServoState = LiftServoState.UP;
+        timer = new ElapsedTime();
     }
 
     public void setPower(double power) {

@@ -20,8 +20,11 @@ public class Claw implements Mechanism {
     public static double open2 = 0;
     public static double close2 = 1;
 
+    public static double restPos = 0;
+
     boolean leftIsOpen = false;
     boolean rightIsOpen = false;
+
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
@@ -52,18 +55,27 @@ public class Claw implements Mechanism {
         rightIsOpen = false;
     }
 
-    public void thirtyAngleConstant(){
+    public void thirtyAngleVariable(){
         double elbowDownAngle = 180 - shoulderAngle - elbowAngle;
         double a = 90 - elbowDownAngle;
         double servoAngle = a + 30;
         hingeController.setPosition(Func.map(servoAngle, -90, 180, -1, 1));
     }
 
-    public void zeroAngleConstant(){
+    public void zeroAngleVariable(){
         double elbowDownAngle = 180 - shoulderAngle - elbowAngle;
         double a = 90 - elbowDownAngle;
         double servoAngle = a + 90;
         hingeController.setPosition(Func.map(servoAngle, -90, 180, -1, 1));
+    }
+
+    public void restAngleConstant() {
+        hingeController.setPosition(restPos);
+    }
+
+    public void update() {
+        elbowAngle = ArmMapper.elbowAngle;
+        shoulderAngle = ArmMapper.shoulderAngle;
     }
 }
 

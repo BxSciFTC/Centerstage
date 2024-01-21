@@ -28,10 +28,10 @@ public class NewArm2 implements Mechanism {
     boolean prevElbowTouch;
 
     private PIDController shoulderController;
-    public static double p1 = 0.01, i1 = 0, d1 = 0, ff1 = 0;
+    public static double p1 = 0.01, i1 = 0, d1 = 0, ff1 = -0.5;
 
     private PIDController elbowController;
-    public static double p2 = 0.01, i2 = 0, d2 = 0, ff2 = 0;
+    public static double p2 = -0.02, i2 = -0.01, d2 = -0.0015, ff2 = 0.2;
 
 
     //count per revolution of the absolute encoders
@@ -41,14 +41,14 @@ public class NewArm2 implements Mechanism {
     //basically the elbow is extended all the way horizontally
 
     //default 185 degrees
-    public static int shoulder185 = 272;
+    public static int shoulder185 = 264;
 
     //default reset 11 degrees
     public static int elbow11 = 39;
 
-    public static double shoulderPower = 0;
+    public static double shoulderPower = 1;
 
-    public static double elbowPower = 0;
+    public static double elbowPower = 1;
 
 
     public void shoulderGoToAngle(double angle) {
@@ -143,7 +143,7 @@ public class NewArm2 implements Mechanism {
         shoulder2.setPower(shoulderPower*(powerShoulder + shoulderFF()));
 
         double powerElbow = elbowController.calculate(elbowPos, elbowTarget);
-        elbow.setPower(elbowPower*(powerElbow + elbowFF()));
+        elbow.setPower(elbowPower*(-1 * powerElbow + elbowFF()));
 
 
         //FIX ELBOW CALIBRATE IS INCORRECT WHILE SHOULDER IS NOT ZERO
@@ -164,14 +164,14 @@ public class NewArm2 implements Mechanism {
 //    public static double shoulderFg = 0;
 
     public static double weight1 = 1;
-    public static double weight2 = 1;
+    public static double weight2 = 0.6;
     public static double COMAngle = 0;
 
     public double shoulderFF() {
 //        double downAngle = shoulderDegrees();
 //        return ff1 * cos(Math.toRadians(downAngle));
-        double shoulderAngle = shoulderDegrees();
-        double downAngle = shoulderDegrees() + elbowDegrees() - 180;
+        double shoulderAngle = Math.toRadians(shoulderDegrees());
+        double downAngle = Math.toRadians(shoulderDegrees() + elbowDegrees() - 180);
 
         //shoulder COM
         double x1 = RobotConstants.shoulderLen * cos(shoulderAngle) / 2;
@@ -184,7 +184,7 @@ public class NewArm2 implements Mechanism {
         double COMx = (weight1 * x1 + weight2 * x2) / 2;
         double COMy = (weight1 * y1 + weight2 * y2) / 2;
 
-        COMAngle = atan2(COMy, COMx);
+        COMAngle = atan2(COMy,COMx);
 
         return ff1 * cos(COMAngle);
 
@@ -206,8 +206,11 @@ public class NewArm2 implements Mechanism {
 //        return 0;
     }
 
+    public static double downdownAngle = 0;
+
     public double elbowFF() {
         double downAngle = shoulderDegrees() + elbowDegrees() - 180;
+        downdownAngle = downAngle;
         return ff2 * cos(Math.toRadians(downAngle));
     }
 
