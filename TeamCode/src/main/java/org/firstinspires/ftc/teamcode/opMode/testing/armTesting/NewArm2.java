@@ -31,7 +31,7 @@ public class NewArm2 implements Mechanism {
     public static double p1 = 0.01, i1 = 0, d1 = 0, ff1 = -0.5;
 
     private PIDController elbowController;
-    public static double p2 = -0.02, i2 = -0.01, d2 = -0.0015, ff2 = 0.2;
+    public static double p2 = -0.02, i2 = -0.01, d2 = -0.0015, ff2 = 0.6;
 
 
     //count per revolution of the absolute encoders
@@ -50,6 +50,15 @@ public class NewArm2 implements Mechanism {
 
     public static double elbowPower = 1;
 
+    public void powerOff() {
+        shoulderPower = 0;
+        elbowPower = 0;
+    }
+
+    public void powerOn() {
+        shoulderPower = 1;
+        elbowPower = 1;
+    }
 
     public void shoulderGoToAngle(double angle) {
         shoulderTarget = angleToCountShoulder(angle);
@@ -152,7 +161,7 @@ public class NewArm2 implements Mechanism {
         } else {
             prevShoulderTouch = false;
         }
-        if (elbowTouch.isPressed()) {
+        if (shoulderTouch.isPressed() && elbowTouch.isPressed()) {
             calibrateElbow();
         } else {
             prevElbowTouch = false;
