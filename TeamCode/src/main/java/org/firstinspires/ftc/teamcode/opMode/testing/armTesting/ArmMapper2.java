@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.opMode.testing.armTesting;
 
+import com.arcrobotics.ftclib.util.InterpLUT;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.hardware.Mechanism;
 import org.firstinspires.ftc.teamcode.hardware.NewArm;
 import org.firstinspires.ftc.teamcode.hardware.RobotConstants;
@@ -24,6 +26,7 @@ public class ArmMapper2 implements Mechanism {
     public double elbowDownAngle;
 
     public static double xPos, yPos;
+    ElapsedTime pidTime;
 
 
     @Override
@@ -31,6 +34,7 @@ public class ArmMapper2 implements Mechanism {
         this.hwMap = hwMap;
         arm = new NewArm2();
         arm.init(hwMap);
+        pidTime = new ElapsedTime();
 
         xPos = 0;
         yPos = 20;
@@ -51,6 +55,37 @@ public class ArmMapper2 implements Mechanism {
 
         this.xPos = x1;
         this.yPos = y1;
+
+        arm.shoulderGoToAngle(shoulderAngle);
+        arm.elbowGoToAngle(elbowAngle);
+    }
+
+    public void moveTo(double x1, double y1, boolean interp) {
+        if (!interp) {
+            moveTo(x1, y1);
+            return;
+        }
+
+        double[] angles = calculateAngle(x1, y1);
+        shoulderAngle = angles[0];
+        elbowAngle = angles[1];
+        elbowDownAngle = angles[2];
+
+        //shoulder Look up table
+        InterpLUT sInterp = new InterpLUT();
+        //elbow Look up table
+        InterpLUT eInterp = new InterpLUT();
+        sInterp.add(0, arm.shoulderDegrees());
+        sInterp.add(1, shoulderAngle);
+        eInterp.add(0, arm.elbowDegrees());
+        eInterp.add(1, elbowAngle);
+
+        pidTime.reset();
+        double time = 2000;
+        while (pidTime.milliseconds() <= time) {
+            arm.shoulderGoToAngle(sInterp.get(pidTime.milliseconds()/time));
+            arm.elbowGoToAngle(eInterp.get(pidTime.milliseconds()/time));
+        }
     }
 
     public void shift(double x1, double y1) {

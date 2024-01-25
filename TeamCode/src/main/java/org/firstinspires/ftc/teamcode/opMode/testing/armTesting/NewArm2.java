@@ -70,7 +70,7 @@ public class NewArm2 implements Mechanism {
 
 //    public static int negative1 = 1;
 
-    private int angleToCountShoulder(double angle) {
+    public static int angleToCountShoulder(double angle) {
         double counts = (angle / 360) * CPR;
 
         counts = shoulder185 - counts;
@@ -80,7 +80,7 @@ public class NewArm2 implements Mechanism {
     }
 
 
-    private int angleToCountElbow(double angle) {
+    public static int angleToCountElbow(double angle) {
         double counts = (angle / 360) * CPR;
 
         counts = -elbow11 + counts - shoulder.getCurrentPosition();
@@ -119,8 +119,8 @@ public class NewArm2 implements Mechanism {
 
     public static int shoulderTarget = shoulder185;
     public static int elbowTarget = elbow11;
-    public int shoulderPos = 0;
-    public int elbowPos = 0;
+    public static int shoulderPos = 0;
+    public static int elbowPos = 0;
 
 
     @Override
