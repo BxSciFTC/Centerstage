@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode.opMode.auton.start_red;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.hardware.ArmClawFSM;
-import org.firstinspires.ftc.teamcode.opMode.auton.Constants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.opMode.auton.RedNearCornerConstants;
+import org.firstinspires.ftc.teamcode.opMode.auton.constsThings.RedNearCornerConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "Red Close", group = "_Auto")
 //need to update with constants

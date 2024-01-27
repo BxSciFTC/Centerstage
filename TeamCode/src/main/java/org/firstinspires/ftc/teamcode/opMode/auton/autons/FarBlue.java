@@ -1,17 +1,18 @@
 package org.firstinspires.ftc.teamcode.opMode.auton.autons;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.hardware.Camera;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-//TEST2
-@Autonomous(name = "FarRed")
-public class FarRed extends LinearOpMode {
+
+//NOT DONE
+@Autonomous(name = "FarBlue")
+public class FarBlue extends LinearOpMode {
     Robot robot = new Robot();
     SampleMecanumDrive drive;
 
@@ -50,27 +51,9 @@ public class FarRed extends LinearOpMode {
                 .build();
 
         waitForStart();
-
+        drive.followTrajectorySequence(initial);
         while (opModeIsActive() && !isStopRequested()) {
             drive.update();
-            drive.followTrajectorySequence(initial);
         }
     }
-
 }
-
-//
-//        telemetry.setMsTransmissionInterval(50);
-//                /*
-//                 * The INIT-loop:
-//                 * This REPLACES waitForStart!
-//                 */
-//                while (!isStarted() && !isStopRequested())
-//                {
-//
-//
-//                telemetry.update();
-//                sleep(20);
-//                }
-//
-//                waitForStart();

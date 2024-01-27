@@ -68,11 +68,9 @@ public class ArmMapperTest extends LinearOpMode {
         telemetry.addData("arm.arm.shoulderDegrees()", arm.arm.shoulderDegrees());
         telemetry.addData("arm.xPos", arm.xPos);
         telemetry.addData("arm.yPos", arm.yPos);
-        telemetry.addData("elbow1", mapY);
-        telemetry.addData("elbow1", mapY);
         telemetry.addData("arm.shoulderTouch.isPressed()", arm.arm.shoulderTouch.isPressed());
-        telemetry.addData("arm.elbowTouch.isPressed()", arm.arm.elbowTouch.isPressed());
-        telemetry.addData("arm.elbowTouch.isPressed()", arm.arm.elbowTouch.isPressed());
+        telemetry.addData("ArmMapper2.shoulderDx", ArmMapper2.shoulderDx);
+        telemetry.addData("ArmMapper2.elbowDx", ArmMapper2.elbowDx);
 
         double[] angles = arm.calculateAngle(arm.xPos, arm.yPos);
 

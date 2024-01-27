@@ -6,13 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.opMode.auton.BlueFarTrapConstants;
-import org.firstinspires.ftc.teamcode.opMode.auton.BlueNearTrapConstants;
-
-
-import org.firstinspires.ftc.teamcode.opMode.auton.RedNearTrapConstants;
-import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "Park_redF")
 public class Park_RedFar extends LinearOpMode {
     ElapsedTime timer;

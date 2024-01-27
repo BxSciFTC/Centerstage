@@ -27,6 +27,7 @@ public class ArmMapper2 implements Mechanism {
 
     public static double xPos, yPos;
     ElapsedTime pidTime;
+    boolean busy;
 
 
     @Override
@@ -35,9 +36,10 @@ public class ArmMapper2 implements Mechanism {
         arm = new NewArm2();
         arm.init(hwMap);
         pidTime = new ElapsedTime();
+        busy = false;
 
         xPos = 10;
-        yPos = 10;
+        yPos = 15;
     }
     /*
         Forward is positive x
@@ -86,7 +88,15 @@ public class ArmMapper2 implements Mechanism {
         }
     }
 
+    public static double maxA = 10;
+    public static double maxV = 45;
+    public static double shoulderDx = 0;
+    public static double elbowDx = 0;
+
+
     public void moveToMotionProfile(double x1, double y1) {
+        if (busy) return;
+        busy = true;
         double[] angles = calculateAngle(x1, y1);
         shoulderAngle = angles[0];
         elbowAngle = angles[1];
@@ -100,19 +110,18 @@ public class ArmMapper2 implements Mechanism {
 
         ElapsedTime shoulderTimer = new ElapsedTime();
         ElapsedTime elbowTimer = new ElapsedTime();
-        double maxA = 1;
-        double maxV = 1;
 
-        double shoulderDx = 0;
-        double elbowDx = 0;
+//        double shoulderDx = 0;
+//        double elbowDx = 0;
 
-        while (!(shoulderDx != shoulderDistanceDelta) || !(elbowDx != elbowDistanceDelta)) {
+        while ((shoulderDx != shoulderDistanceDelta) || (elbowDx != elbowDistanceDelta)) {
             shoulderDx = motion_profile(maxA, maxV, shoulderDistanceDelta, shoulderTimer);
             elbowDx = motion_profile(maxA, maxV, elbowDistanceDelta, elbowTimer);
 
             arm.shoulderGoToAngle(shoulderCurrent + shoulderDx);
             arm.elbowGoToAngle(elbowCurrent + elbowDx);
         }
+        busy = false;
     }
 
     double motion_profile(double max_acceleration, double max_velocity, double distance, ElapsedTime elapsed_time) {
@@ -175,10 +184,6 @@ public class ArmMapper2 implements Mechanism {
         }
     }
 
-
-
-
-
     public void shift(double x1, double y1) {
         double newX = isInRange(xPos + x1, yPos) ? xPos + x1 : xPos;
         double newY = isInRange(newX, yPos + y1) ? yPos + y1 : yPos;
@@ -190,20 +195,22 @@ public class ArmMapper2 implements Mechanism {
     }
 
     public void collectPixels1() {
-
+        moveToMotionProfile(24, 0);
     }
 
     public void rest() {
-
+        moveToMotionProfile(0, 10);
+        //DONT FORGET TO POWER OFF POWER ON
     }
 
     public void score1Spot() {
-
+        moveToMotionProfile(15, 15);
     }
 
-    public void doThing() {
-        this.xPos -= 4;
+    public void score2Spot() {
+        moveToMotionProfile(12, 11);
     }
+
 
     //tells if coordinate is outside the range of motion of the two arms(a circle shape)
     public boolean isInRange(double x, double y) {
@@ -217,8 +224,6 @@ public class ArmMapper2 implements Mechanism {
 //    }
 
     public void PIDUpdate() {
-        arm.shoulderGoToAngle(shoulderAngle);
-        arm.elbowGoToAngle(elbowAngle);
         arm.PIDUpdate();
     }
 

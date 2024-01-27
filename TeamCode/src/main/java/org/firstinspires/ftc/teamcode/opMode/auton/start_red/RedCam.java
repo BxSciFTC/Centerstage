@@ -4,8 +4,8 @@
 //import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 //import org.firstinspires.ftc.teamcode.hardware.ArmClawFSM;
 //import org.firstinspires.ftc.teamcode.hardware.Camera;
-//import org.firstinspires.ftc.teamcode.opMode.auton.Constants;
-//import org.firstinspires.ftc.teamcode.opMode.auton.RedFarCornerConstants;
+//import org.firstinspires.ftc.teamcode.opMode.auton.constsThings.Constants;
+//import org.firstinspires.ftc.teamcode.opMode.auton.constsThings.RedFarCornerConstants;
 //import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 //
 ////need to update with constants
