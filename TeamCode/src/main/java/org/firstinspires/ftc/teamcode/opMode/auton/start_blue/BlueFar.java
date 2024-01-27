@@ -2,8 +2,7 @@ package org.firstinspires.ftc.teamcode.opMode.auton.start_blue;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.hardware.ArmClawFSM;
-import org.firstinspires.ftc.teamcode.opMode.auton.BlueFarCornerConstants;
+import org.firstinspires.ftc.teamcode.opMode.auton.constsThings.BlueFarCornerConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 

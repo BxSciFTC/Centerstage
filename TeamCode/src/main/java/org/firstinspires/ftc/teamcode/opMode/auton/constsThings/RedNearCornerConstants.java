@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opMode.auton;
+package org.firstinspires.ftc.teamcode.opMode.auton.constsThings;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 public class RedNearCornerConstants {

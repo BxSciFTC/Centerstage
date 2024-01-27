@@ -14,25 +14,15 @@ public class MeepMeepTesting {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-35, -61, Math.toRadians(90)))
-                                .lineToSplineHeading(new Pose2d(-35, -10, Math.toRadians(270)))
+                        drive.trajectorySequenceBuilder(new Pose2d(11, -61, Math.toRadians(90)))
+                                .lineToSplineHeading(new Pose2d(11, -52, Math.toRadians(110)))
                                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
 
                                 })
                                 .waitSeconds(1)
-                                .lineToLinearHeading(new Pose2d(34, -10, Math.toRadians(0)))
-                                .splineToSplineHeading(new Pose2d(39, -34, Math.toRadians(0)), Math.toRadians(270))
-                                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-
-                                })
-                                .waitSeconds(1)
-                                .splineToLinearHeading(new Pose2d(34, -10, Math.toRadians(180)), Math.toRadians(0))
-                                .splineToLinearHeading(new Pose2d(-42, -10, Math.toRadians(180)), Math.toRadians(0))
-                                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-
-                                })
-                                .lineToLinearHeading(new Pose2d(34, -10, Math.toRadians(0)))
-                                .splineToSplineHeading(new Pose2d(39, -34, Math.toRadians(0)), Math.toRadians(270))
+                                .lineToLinearHeading(new Pose2d(39, -48, Math.toRadians(0)))
+                                .setTangent(90)
+                                .splineToSplineHeading(new Pose2d(39, -34, Math.toRadians(0)), Math.toRadians(0))
                                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
 
                                 })

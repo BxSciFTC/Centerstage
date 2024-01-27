@@ -2,10 +2,8 @@ package org.firstinspires.ftc.teamcode.opMode.auton.start_blue;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.hardware.ArmClawFSM;
-import org.firstinspires.ftc.teamcode.opMode.auton.BlueNearCornerConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.opMode.auton.BlueNearTrapConstants;
+import org.firstinspires.ftc.teamcode.opMode.auton.constsThings.BlueNearTrapConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "BlueFar_notCorner", group = "_Auto")
