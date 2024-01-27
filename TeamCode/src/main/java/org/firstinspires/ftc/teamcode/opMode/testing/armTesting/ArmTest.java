@@ -31,8 +31,8 @@ public class ArmTest extends LinearOpMode {
 
     }
     
-    public static int shoulder1 = 0;
-    public static int elbow1 = 27;
+    public static int shoulder1 = 90;
+    public static int elbow1 = 90;
     
     
     public void run(Gamepad gamepad) {

@@ -28,10 +28,10 @@ public class NewArm2 implements Mechanism {
     boolean prevElbowTouch;
 
     private PIDController shoulderController;
-    public static double p1 = 0.01, i1 = 0, d1 = 0, ff1 = -0.5;
+    public static double p1 = 0.03, i1 = 0, d1 = 0, ff1 = -0.5;
 
     private PIDController elbowController;
-    public static double p2 = -0.02, i2 = -0.01, d2 = -0.0015, ff2 = 0.6;
+    public static double p2 = -0.03, i2 = -0.0, d2 = -0.00, ff2 = 0.7;
 
 
     //count per revolution of the absolute encoders

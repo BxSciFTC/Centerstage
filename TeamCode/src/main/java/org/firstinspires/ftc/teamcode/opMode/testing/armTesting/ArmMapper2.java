@@ -36,8 +36,8 @@ public class ArmMapper2 implements Mechanism {
         arm.init(hwMap);
         pidTime = new ElapsedTime();
 
-        xPos = 0;
-        yPos = 20;
+        xPos = 10;
+        yPos = 10;
     }
     /*
         Forward is positive x
@@ -52,6 +52,9 @@ public class ArmMapper2 implements Mechanism {
         shoulderAngle = angles[0];
         elbowAngle = angles[1];
         elbowDownAngle = angles[2];
+
+        arm.shoulderGoToAngle(Math.toRadians(shoulderAngle));
+        arm.elbowGoToAngle(Math.toRadians(elbowAngle));
 
         this.xPos = x1;
         this.yPos = y1;

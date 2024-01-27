@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.opMode.teleOp.TeleOpMain;
 
 @Config
 public class Lift implements Mechanism {
@@ -20,7 +22,7 @@ public class Lift implements Mechanism {
     Servo liftServo;
 
     Servo stopServo;
-    public static double upPos = 0, downPos = 1, openPos = 0, closePos = 1;
+    public static double upPos = 0.6, downPos = 0.3, openPos = 0.8, closePos = 0.4;
 
     LiftState liftState;
 
@@ -60,35 +62,59 @@ public class Lift implements Mechanism {
         lift.setPower(power);
     }
 
+    ElapsedTime stopTimer = new ElapsedTime();
+
     public void update(){
+        Telemetry tele = TeleOpMain.tele;
+        tele.addData("doing", 'x');
+
         if (liftServoState != prevServoState) {
             timer.reset();
         }
         switch (liftState){
             case UP:
                 lift.setPower(1);
-
+                tele.addData("upLift", 'x');
                 break;
             case DOWN:
                 lift.setPower(-1);
-
+                tele.addData("downlift", 'x');
                 break;
             case NORMAL:
                 lift.setPower(0);
+                tele.addData("normallift", 'x');
+                break;
         }
+
+        if (prevServoState != liftServoState) {
+            stopTimer.reset();
+        }
+
         switch (liftServoState) {
             case UP:
-                liftServo.setPosition(upPos);
-                while (timer.milliseconds() <= 1000) {}
-                stopServo.setPosition(closePos);
+                tele.addData("upstop", 'x');
+                if (stopTimer.milliseconds() < 1000) {
+                    liftServo.setPosition(upPos);
+                    tele.addData("upuplift", 'x');
+                } else {
+                    stopServo.setPosition(closePos);
+                    tele.addData("downdownlift", 'x');
+                }
                 break;
             case DOWN:
+                tele.addData("downstop", 'x');
                 timer.reset();
-                stopServo.setPosition(openPos);
-                while (timer.milliseconds() <= 1000) {}
-                liftServo.setPosition(downPos);
+                if (stopTimer.milliseconds() < 1000) {
+                    stopServo.setPosition(openPos);
+                    tele.addData("upupstop", 'x');
+                } else {
+                    liftServo.setPosition(downPos);
+                    tele.addData("downdownstop", 'x');
+                }
                 break;
         }
+        prevServoState = liftServoState;
+        tele.update();
     }
 
 

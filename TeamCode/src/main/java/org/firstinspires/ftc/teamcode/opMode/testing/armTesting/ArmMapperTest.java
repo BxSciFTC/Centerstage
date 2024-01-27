@@ -31,7 +31,7 @@ public class ArmMapperTest extends LinearOpMode {
     }
 
     public static double mapX = 0;
-    public static double mapY = 10;
+    public static double mapY = 24;
 
 
     public void run(Gamepad gamepad) {
@@ -51,6 +51,8 @@ public class ArmMapperTest extends LinearOpMode {
             arm.shift(2, 0);
         }
 
+//        arm.moveTo(mapX, mapY);
+
         arm.PIDUpdate();
 
         telemetry.addData("arm.shoulder.getCurrentPosition()", arm.arm.shoulder.getCurrentPosition());
@@ -58,6 +60,12 @@ public class ArmMapperTest extends LinearOpMode {
         telemetry.addData("NewArm2.shoulderTarget", NewArm2.shoulderTarget);
         telemetry.addData("NewArm2.elbowTarget", NewArm2.elbowTarget);
         telemetry.addData("shoulder1", mapX);
+        telemetry.addData("elbow1", mapY);
+        telemetry.addData("arm.arm.elbowDegrees()", arm.arm.elbowDegrees());
+        telemetry.addData("arm.arm.shoulderDegrees()", arm.arm.shoulderDegrees());
+        telemetry.addData("arm.xPos", arm.xPos);
+        telemetry.addData("arm.yPos", arm.yPos);
+        telemetry.addData("elbow1", mapY);
         telemetry.addData("elbow1", mapY);
         telemetry.addData("arm.shoulderTouch.isPressed()", arm.arm.shoulderTouch.isPressed());
         telemetry.addData("arm.elbowTouch.isPressed()", arm.arm.elbowTouch.isPressed());
