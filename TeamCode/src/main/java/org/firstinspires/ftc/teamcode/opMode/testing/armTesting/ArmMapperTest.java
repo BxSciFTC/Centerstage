@@ -21,7 +21,7 @@ public class ArmMapperTest extends LinearOpMode {
         arm = new ArmMapper2();
         arm.init(hardwareMap);
 
-        arm.moveTo(mapX, mapY);
+        arm.moveToMotionProfile(mapX, mapY);
 
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         waitForStart();
@@ -50,6 +50,9 @@ public class ArmMapperTest extends LinearOpMode {
         if (gamepad11.dpad_right && !gamepad22.dpad_right) {
             arm.shift(2, 0);
         }
+        if (gamepad11.x && !gamepad22.x) {
+            arm.moveToMotionProfile(mapX, mapY);
+        }
 
 //        arm.moveTo(mapX, mapY);
 
@@ -71,7 +74,7 @@ public class ArmMapperTest extends LinearOpMode {
         telemetry.addData("arm.elbowTouch.isPressed()", arm.arm.elbowTouch.isPressed());
         telemetry.addData("arm.elbowTouch.isPressed()", arm.arm.elbowTouch.isPressed());
 
-        double[] angles = arm.calculateAngle(mapX, mapY);
+        double[] angles = arm.calculateAngle(arm.xPos, arm.yPos);
 
         telemetry.addData("angles[0]", angles[0]);
         telemetry.addData("angles[1]", angles[1]);

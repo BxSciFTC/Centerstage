@@ -39,10 +39,10 @@ public class ClawFSM implements Mechanism {
     }
 
     public void leftOpen(){
-        leftClawState = LeftClawState.OPEN;
+        leftClawState = leftClawState.OPEN;
     }
     public void leftClose(){
-        leftClawState = LeftClawState.CLOSE;
+        leftClawState = leftClawState.CLOSE;
     }
 
     public void rightOpen(){
