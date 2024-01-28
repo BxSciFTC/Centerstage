@@ -74,7 +74,17 @@ public class Controller implements Mechanism {
     }
 
     void armMove() {
-
+        //updownleftright
+        if (gamepadFirst1.triangle && !gamepadFirst2.triangle) {
+            robot.arm.pickup();
+        }
+        else if (gamepadFirst1.cross && !gamepadFirst2.cross) {
+            robot.arm.rest();
+        } else if (gamepadFirst1.square && !gamepadFirst2.square) {
+            robot.arm.score1();
+        }else if (gamepadFirst1.circle && !gamepadFirst2.circle) {
+            robot.arm.score2();
+        }
 
 //        double xShift = 0;
 //        double yShift = 0;
