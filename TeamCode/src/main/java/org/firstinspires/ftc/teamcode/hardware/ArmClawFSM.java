@@ -6,6 +6,8 @@ public class ArmClawFSM implements Mechanism {
     HardwareMap hwMap;
     ArmMapper arm;
     ClawFSM claw;
+
+//    ScuffedAngle desperation;
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
@@ -13,6 +15,8 @@ public class ArmClawFSM implements Mechanism {
         claw = new ClawFSM();
         arm.init(hwMap);
         claw.init(hwMap);
+//        desperation = new ScuffedAngle();
+//        desperation.init((hwMap));
 
     }
 
@@ -47,6 +51,18 @@ public class ArmClawFSM implements Mechanism {
         claw.leftClose();
         arm.moveTo(100000000, 10000000);
     }
+    /*public void high(){
+        desperation.high();
+    }*/
+    /*public void low(){
+        desperation.low();
+    }*/
+//    public void drop(){
+//        desperation.drop();
+//    }
+//    public void floor(){
+//        desperation.floor();
+//    }
     public void update(){
         arm.PIDUpdate();
     }

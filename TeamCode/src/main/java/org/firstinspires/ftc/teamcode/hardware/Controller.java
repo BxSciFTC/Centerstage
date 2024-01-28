@@ -88,7 +88,20 @@ public class Controller implements Mechanism {
         }else if (gamepadFirst1.circle && !gamepadFirst2.circle) {
             xShift += 0.2;
         }
+
         robot.arm.shift(xShift, yShift);
+
+
+//        if (gamepadFirst1.triangle && !gamepadFirst2.triangle) {
+//            robot.arm.high();
+//        }
+//        else if (gamepadFirst1.cross && !gamepadFirst2.cross) {
+//            robot.arm.low();
+//        } else if (gamepadFirst1.square && !gamepadFirst2.square) {
+//            robot.arm.floor();
+//        }else if (gamepadFirst1.circle && !gamepadFirst2.circle) {
+//            robot.arm.drop();
+//        }
     }
 
 //    void clawHingeMove(){ //controls hinge with buttons
