@@ -1,14 +1,12 @@
-package org.firstinspires.ftc.teamcode.opMode.testing.ArmPresetsTesting;
+package org.firstinspires.ftc.teamcode.hardware;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import org.firstinspires.ftc.teamcode.hardware.Mechanism;
-import org.firstinspires.ftc.teamcode.opMode.testing.armTesting.NewArm2;
 
 @Config
 public class ArmPresetsSafe implements Mechanism {
-    public NewArm2 arm;
+    public NewArm arm;
     HardwareMap hwMap;
 
     //is q1 angle in the model
@@ -19,7 +17,7 @@ public class ArmPresetsSafe implements Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
-        arm = new NewArm2();
+        arm = new NewArm();
         arm.init(hwMap);
         timer = new ElapsedTime();
         presets = Presets.REST;
