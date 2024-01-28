@@ -41,7 +41,7 @@ public class Controller implements Mechanism {
         lift();
 //        clawHingeMove();
         clawMove();
-
+        armMove();
 
 //        double frequencyTime = 1000.0 / frequency;
 //        if (timer.milliseconds() > frequencyTime) {
