@@ -93,6 +93,35 @@ public class ArmMapper2 implements Mechanism {
     public static double shoulderDx = 0;
     public static double elbowDx = 0;
 
+    public void moveToMotionProfileByAngle(double q1, double q2, double y) {
+//        if (busy) return;
+        busy = true;
+        shoulderAngle = q1;
+        elbowAngle = q2;
+        elbowDownAngle = -(q2-180);
+        yPos = y;
+
+        double shoulderCurrent = arm.shoulderDegrees();
+        double elbowCurrent = arm.elbowDegrees();
+
+        double shoulderDistanceDelta = shoulderAngle - shoulderCurrent;
+        double elbowDistanceDelta = elbowAngle - elbowCurrent;
+
+        ElapsedTime shoulderTimer = new ElapsedTime();
+        ElapsedTime elbowTimer = new ElapsedTime();
+
+//        double shoulderDx = 0;
+//        double elbowDx = 0;
+
+        while ((shoulderDx != shoulderDistanceDelta) || (elbowDx != elbowDistanceDelta)) {
+            shoulderDx = motion_profile(maxA, maxV, shoulderDistanceDelta, shoulderTimer);
+            elbowDx = motion_profile(maxA, maxV, elbowDistanceDelta, elbowTimer);
+
+            arm.shoulderGoToAngle(shoulderCurrent + shoulderDx);
+            arm.elbowGoToAngle(elbowCurrent + elbowDx);
+        }
+        busy = false;
+    }
 
     public void moveToMotionProfile(double x1, double y1) {
         if (busy) return;
