@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.opMode.teleOp.TeleOpMain;
 //teleOp class
 public class Controller implements Mechanism {
     Robot robot = new Robot();
-    ElapsedTime timer;
+//    ElapsedTime timer;
 
     HardwareMap hwMap;
 
@@ -26,7 +26,7 @@ public class Controller implements Mechanism {
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
         robot.init(hwMap);
-        timer = new ElapsedTime();
+//        timer = new ElapsedTime();
     }
 
     public void run(Gamepad gamepad1, Gamepad gamepad2) {
@@ -43,12 +43,12 @@ public class Controller implements Mechanism {
         clawMove();
 
 
-        double frequencyTime = 1000.0 / frequency;
-        if (timer.milliseconds() > frequencyTime) {
-            armMove();
-        } else {
-            timer.reset();
-        }
+//        double frequencyTime = 1000.0 / frequency;
+//        if (timer.milliseconds() > frequencyTime) {
+//            armMove();
+//        } else {
+//            timer.reset();
+//        }
 
         robot.update();
     }

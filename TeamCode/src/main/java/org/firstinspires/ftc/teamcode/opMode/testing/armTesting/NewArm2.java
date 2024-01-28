@@ -196,23 +196,6 @@ public class NewArm2 implements Mechanism {
         COMAngle = atan2(COMy,COMx);
 
         return ff1 * cos(COMAngle);
-
-//        double shoulderDegrees = shoulderDegrees();
-//        double elbowDegrees = elbowDegrees();
-//        double shoulderRadians = Math.toRadians(shoulderDegrees);
-//        double elbowRadians = Math.toRadians(elbowDegrees);
-//        double angle3 = shoulderRadians-Math.PI;
-//        double angle4 = 90 - Math.PI - shoulderRadians - angle3;
-//        if (shoulderDegrees >= 0 && shoulderDegrees < 90) {
-//            return motorFg*(cos(shoulderRadians))*(RobotConstants.shoulderLen) +
-//                    (elbowFg*cos(angle3)) * RobotConstants.shoulderLen / cos(angle4) +
-//                    shoulderFg * cos(shoulderRadians) * (RobotConstants.shoulderLen / 2);
-//        } else if (shoulderDegrees >= 90 && shoulderDegrees <= 180) {
-//            return motorFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
-//                    elbowFg * cos(shoulderRadians) * RobotConstants.shoulderLen +
-//                    shoulderFg * cos(shoulderRadians);
-//        }
-//        return 0;
     }
 
     public static double downdownAngle = 0;
