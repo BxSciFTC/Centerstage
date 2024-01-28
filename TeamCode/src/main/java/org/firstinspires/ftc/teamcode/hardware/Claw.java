@@ -14,11 +14,11 @@ public class Claw implements Mechanism {
     public static double elbowAngle;
     public static double shoulderAngle;
 
-    public static double open1 = 0;
-    public static double close1 = 1;
+    public static double open1 = 0.1;
+    public static double close1 = 0.5;
 
-    public static double open2 = 0;
-    public static double close2 = 1;
+    public static double open2 = 0.8;
+    public static double close2 = 0.35;
 
     public static double restPos = 0;
 
