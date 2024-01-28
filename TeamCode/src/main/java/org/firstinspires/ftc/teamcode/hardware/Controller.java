@@ -40,6 +40,7 @@ public class Controller implements Mechanism {
         planeFly();
         lift();
 //        clawHingeMove();
+        armMove();
         clawMove();
         armMove();
 
