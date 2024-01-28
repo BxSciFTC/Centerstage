@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.teamcode.opMode.teleOp.TeleOpMain;
 
 public class ArmClawFSM implements Mechanism {
     HardwareMap hwMap;
@@ -27,22 +28,27 @@ public class ArmClawFSM implements Mechanism {
     public void preAutonRest() {
         claw.setPreAutonRest();
         arm.rest();
+        TeleOpMain.tele.addData("fsm111", "1");
     }
     public void rest() {
         claw.setRest();
         arm.rest();
+        TeleOpMain.tele.addData("fsm222", "1");
     }
     public void pickup() {
         claw.setPickup();
         arm.pickup();
+        TeleOpMain.tele.addData("fsm333", "1");
     }
     public void score1() {
         claw.setScore1();
         arm.score1();
+        TeleOpMain.tele.addData("fsm444", "1");
     }
     public void score2() {
         claw.setScore2();
         arm.score2();
+        TeleOpMain.tele.addData("fsm555", "1");
     }
 
     public void update(){

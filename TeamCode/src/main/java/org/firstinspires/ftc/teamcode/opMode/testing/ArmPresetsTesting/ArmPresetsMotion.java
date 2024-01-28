@@ -27,7 +27,7 @@ public class ArmPresetsMotion implements Mechanism {
         pidTime = new ElapsedTime();
     }
 
-    public static double restq1 = 90 , restq2 = 90;
+    public static double restq1 = 180 , restq2 = 26;
     public static double pickupq1 = 90 , pickupq2 = 90;
     public static double score1q1 = 90 , score1q2 = 90;
     public static double score2q1 = 90 , score2q2 = 90;

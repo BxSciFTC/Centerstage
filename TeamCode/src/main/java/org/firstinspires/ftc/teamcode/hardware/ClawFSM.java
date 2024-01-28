@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.teamcode.opMode.teleOp.TeleOpMain;
 
 @Config
 public class ClawFSM implements Mechanism {
@@ -53,6 +54,7 @@ public class ClawFSM implements Mechanism {
         rightClawState = rightClawState.CLOSE;
     }
 
+
     public void setPreAutonRest() {
         hingeState = HingeState.PREAUTONREST;
     }
@@ -70,22 +72,26 @@ public class ClawFSM implements Mechanism {
     }
 
     public void update() {
-        clawMechanism.update();
-
+        TeleOpMain.tele.addData(String.valueOf(hingeState), String.valueOf(hingeState));
         switch (hingeState) {
             case PREAUTONREST:
+                TeleOpMain.tele.addData("1", "1");
                 clawMechanism.preAutonomousRest();
                 break;
             case REST:
+                TeleOpMain.tele.addData("2", "1");
                 clawMechanism.restAngleConstant();
                 break;
             case PICKUP:
+                TeleOpMain.tele.addData("3", "1");
                 clawMechanism.pickup();
                 break;
             case SCORE1:
+                TeleOpMain.tele.addData("4", "1");
                 clawMechanism.score1();
                 break;
             case SCORE2:
+                TeleOpMain.tele.addData("5", "1");
                 clawMechanism.score2();
                 break;
         }
@@ -105,7 +111,9 @@ public class ClawFSM implements Mechanism {
                 clawMechanism.rightClose();
                 break;
         }
+        TeleOpMain.tele.update();
     }
+
 }
 
 //package org.firstinspires.ftc.teamcode.hardware;

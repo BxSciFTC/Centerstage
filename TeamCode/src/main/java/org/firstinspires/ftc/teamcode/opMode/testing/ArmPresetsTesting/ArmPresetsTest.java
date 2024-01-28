@@ -14,6 +14,7 @@ public class ArmPresetsTest extends LinearOpMode {
     ArmPresetsMotion arm;
 
     Gamepad prev = new Gamepad();
+    String mode = "";
 
     public void runOpMode() {
         arm = new ArmPresetsMotion();
@@ -24,15 +25,19 @@ public class ArmPresetsTest extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             if (gamepad1.dpad_up && !prev.dpad_up) {
+                mode = "Rest";
                 arm.rest();
             }
             if (gamepad1.dpad_down && !prev.dpad_down) {
+                mode = "pickup";
                 arm.pickup();
             }
             if (gamepad1.dpad_left && !prev.dpad_left) {
+                mode = "Score1";
                 arm.score1();
             }
             if (gamepad1.dpad_right && !prev.dpad_right) {
+                mode = "score2";
                 arm.score2();
             }
 
@@ -42,8 +47,9 @@ public class ArmPresetsTest extends LinearOpMode {
             telemetry.addData("elbowTarget", NewArm2.elbowTarget);
             telemetry.addData("arm.arm.elbowDegrees()", arm.arm.elbowDegrees());
             telemetry.addData("arm.arm.shoulderDegrees()", arm.arm.shoulderDegrees());
+            telemetry.addData("mode", mode);
 //            telemetry.addData("presets", arm.presets);
-
+            telemetry.update();
             prev.copy(gamepad1);
         }
 

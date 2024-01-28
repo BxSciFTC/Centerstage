@@ -24,10 +24,10 @@ public class ArmPresetsSafe implements Mechanism {
         prevPresets = Presets.REST;
     }
 
-    public static double restq1 = 90 , restq2 = 90;
-    public static double pickupq1 = 90 , pickupq2 = 90;
+    public static double restq1 = 180 , restq2 = 26;
+    public static double pickupq1 = 0 , pickupq2 = 180;
     public static double score1q1 = 90 , score1q2 = 90;
-    public static double score2q1 = 90 , score2q2 = 90;
+    public static double score2q1 = 60 , score2q2 = 120;
 
     Presets presets;
     Presets prevPresets;
@@ -86,9 +86,11 @@ public class ArmPresetsSafe implements Mechanism {
                 else if (timer.milliseconds() < 2000 && shoulderAngle > 30) {
                     arm.shoulderGoToAngle(45);
                     arm.elbowGoToAngle(180);
-                } else {
+                } else if (timer.milliseconds() < 3000) {
                     arm.shoulderGoToAngle(pickupq1);
                     arm.elbowGoToAngle(pickupq2);
+                } else {
+                    arm.powerOff();
                 }
                 //MAYBE POWER OFF IF NEEDED
                 break;

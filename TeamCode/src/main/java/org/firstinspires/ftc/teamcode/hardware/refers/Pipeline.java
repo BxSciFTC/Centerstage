@@ -41,8 +41,10 @@ public class Pipeline extends OpenCvPipeline {
             lowHSV = new Scalar(0, 70, 50);
             highHSV = new Scalar(10, 255, 255);
         } if (color == "blue") {
-            lowHSV = new Scalar(90, 134, 21);
-            highHSV = new Scalar(120, 255, 255);
+            lowHSV = new Scalar(90, 117, 79);
+            highHSV = new Scalar(107, 255, 255);
+//            lowHSV = new Scalar(90, 134, 21);
+//            highHSV = new Scalar(120, 255, 255);
         } if (color == "CUSTOMCHOOSELATER") {
             lowHSV = new Scalar(110, 50, 50);
             highHSV = new Scalar(120, 255, 255);
