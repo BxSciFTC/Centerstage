@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.opMode.auton.justADivider;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
+@Disabled
 @Autonomous(name = "Park_redF")
 public class Park_RedFar extends LinearOpMode {
     ElapsedTime timer;

@@ -56,4 +56,21 @@ public class MecanumDrive implements Mechanism {
         rightFront.setPower((y - x - rx)/denominator);
         rightRear.setPower((y + x - rx) /denominator);
     }
+
+    public void setWeightedDrivePowerByConstants(double x, double y, double rx) {
+        x = -x * STRAFE_INCREASE;
+
+        //may or may not need to flip this sign - +
+        y = y;
+
+        //right stick controls turning
+        rx = rx;
+
+        //typical Mecanum Drive power calculations
+        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+        leftFront.setPower((y + x + rx) /denominator);
+        leftRear.setPower((y - x + rx)  /denominator);
+        rightFront.setPower((y - x - rx)/denominator);
+        rightRear.setPower((y + x - rx) /denominator);
+    }
 }

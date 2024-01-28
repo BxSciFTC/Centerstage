@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opMode.auton.justADivider;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.hardware.Camera;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
+@Disabled
 @Autonomous(name = "blue")
 public class Blue extends LinearOpMode {
     Robot robot;
@@ -58,7 +60,7 @@ public class Blue extends LinearOpMode {
         rightFront.setPower((0.5));
         rightRear.setPower((0.5) );
 
-        robot.arm.placeInBasket();
+//        robot.arm.placeInBasket();
         while (time.milliseconds() < 3000) {};
 
         if (region == 1) {

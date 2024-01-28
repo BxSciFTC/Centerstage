@@ -1,9 +1,12 @@
-package org.firstinspires.ftc.teamcode.opMode.testing.armTesting;
+package org.firstinspires.ftc.teamcode.opMode.testing.ArmPresetsTesting;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.hardware.Mechanism;
+import org.firstinspires.ftc.teamcode.opMode.testing.armTesting.NewArm2;
 
+@Config
 public class ArmPresetsSafe implements Mechanism {
     public NewArm2 arm;
     HardwareMap hwMap;

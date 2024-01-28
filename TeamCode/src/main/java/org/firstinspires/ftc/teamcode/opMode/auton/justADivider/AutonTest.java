@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opMode.auton.justADivider;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
@@ -12,7 +13,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 
 //https://ftc-docs.firstinspires.org/en/latest/apriltag/vision_portal/visionportal_overview/visionportal-overview.html
 
-
+@Disabled
 @Autonomous(name = "AutoTest")
 public class AutonTest extends LinearOpMode {
     Robot robot = new Robot();

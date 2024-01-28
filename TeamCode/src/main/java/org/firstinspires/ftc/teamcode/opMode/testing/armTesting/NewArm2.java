@@ -1,11 +1,7 @@
 package org.firstinspires.ftc.teamcode.opMode.testing.armTesting;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.controller.PIDController;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -40,11 +36,11 @@ public class NewArm2 implements Mechanism {
     //encoder counts for when the shoulder is at 0 degrees, and the elbow at 180
     //basically the elbow is extended all the way horizontally
 
-    //default 185 degrees
-    public static int shoulder185 = 264;
+    //default 180 degrees
+    public static int shoulder180 = 264;
 
-    //default reset 11 degrees
-    public static int elbow11 = 39;
+    //default reset 26 degrees
+    public static int elbow26 = 39;
 
     public static double shoulderPower = 1;
 
@@ -73,7 +69,7 @@ public class NewArm2 implements Mechanism {
     public static int angleToCountShoulder(double angle) {
         double counts = (angle / 360) * CPR;
 
-        counts = shoulder185 - counts;
+        counts = shoulder180 - counts;
 
         //TODO: may be negative sign
         return (int) (counts);
@@ -83,7 +79,7 @@ public class NewArm2 implements Mechanism {
     public static int angleToCountElbow(double angle) {
         double counts = (angle / 360) * CPR;
 
-        counts = -elbow11 + counts - shoulder.getCurrentPosition();
+        counts = -elbow26 + counts - shoulder.getCurrentPosition();
 
         //TODO: may be negative sign
         return (int) (counts);
@@ -92,7 +88,7 @@ public class NewArm2 implements Mechanism {
     //gets currents angle of shoulder in degrees
     public double shoulderDegrees() {
         double count = shoulder.getCurrentPosition();
-        count = shoulder185 - count;
+        count = shoulder180 - count;
 
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
@@ -106,7 +102,7 @@ public class NewArm2 implements Mechanism {
     public double elbowDegrees() {
         double count = elbow.getCurrentPosition();
 
-        count = elbow11 + count + shoulder.getCurrentPosition();
+        count = elbow26 + count + shoulder.getCurrentPosition();
         //easter egg
         //TODO: ENCODER MAY BE RUNNING IN OPPOSITE DIRECTION AND WE NEED TO CHANGE SIGNS
 
@@ -117,8 +113,8 @@ public class NewArm2 implements Mechanism {
     }
 
 
-    public static int shoulderTarget = shoulder185;
-    public static int elbowTarget = elbow11;
+    public static int shoulderTarget = shoulder180;
+    public static int elbowTarget = elbow26;
     public static int shoulderPos = 0;
     public static int elbowPos = 0;
 

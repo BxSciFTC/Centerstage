@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.opMode.auton.start_blue;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.opMode.auton.constsThings.BlueFarCornerConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-
+@Disabled
 //need to update with constants
 @Autonomous(name = "BlueFar", group = "_Auto")
 public class BlueFar extends LinearOpMode {

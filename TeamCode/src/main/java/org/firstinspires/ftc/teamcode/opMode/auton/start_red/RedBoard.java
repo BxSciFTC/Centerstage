@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.opMode.auton.start_red;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.opMode.auton.constsThings.RedNearCornerConstants;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
+
+@Disabled
 @Autonomous(name = "Red Close", group = "_Auto")
 //need to update with constants
 public class RedBoard extends LinearOpMode {

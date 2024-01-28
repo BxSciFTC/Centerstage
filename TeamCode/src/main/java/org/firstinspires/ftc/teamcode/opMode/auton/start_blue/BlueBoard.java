@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode.opMode.auton.start_blue;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.opMode.auton.constsThings.BlueNearCornerConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
-
+@Disabled
 @Autonomous(name = "BlueBoard", group = "_Auto")
 //need to update with constants
 public class BlueBoard extends LinearOpMode {
