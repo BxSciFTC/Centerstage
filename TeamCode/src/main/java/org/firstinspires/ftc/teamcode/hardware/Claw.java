@@ -14,13 +14,17 @@ public class Claw implements Mechanism {
     public static double elbowAngle;
     public static double shoulderAngle;
 
-    public static double open1 = 0.1;
-    public static double close1 = 0.5;
+    public double open1 = 0.1;
+    public double close1 = 0.5;
 
-    public static double open2 = 0.8;
-    public static double close2 = 0.35;
+    public double open2 = 0.8;
+    public double close2 = 0.35;
 
-    public static double restPos = 0;
+    public static double preAutonRest = 0.5;
+    public static double restPos = 0.5;
+    public static double pickup = 0.5;
+    public static double score1 = 0.5;
+    public static double score2 = 0.5;
 
     boolean leftIsOpen = false;
     boolean rightIsOpen = false;
@@ -55,27 +59,33 @@ public class Claw implements Mechanism {
         rightIsOpen = false;
     }
 
-    public void thirtyAngleVariable(){
-        double elbowDownAngle = 180 - shoulderAngle - elbowAngle;
-        double a = 90 - elbowDownAngle;
-        double servoAngle = a + 30;
-        hingeController.setPosition(Func.map(servoAngle, -90, 180, -1, 1));
-    }
+//    public void thirtyAngleVariable(){
+//        double elbowDownAngle = 180 - shoulderAngle - elbowAngle;
+//        double a = 90 - elbowDownAngle;
+//        double servoAngle = a + 30;
+//        hingeController.setPosition(Func.map(servoAngle, -90, 180, -1, 1));
+//    }
+//
+//    public void zeroAngleVariable(){
+//        double elbowDownAngle = 180 - shoulderAngle - elbowAngle;
+//        double a = 90 - elbowDownAngle;
+//        double servoAngle = a + 90;
+//        hingeController.setPosition(Func.map(servoAngle, -90, 180, -1, 1));
+//    }
 
-    public void zeroAngleVariable(){
-        double elbowDownAngle = 180 - shoulderAngle - elbowAngle;
-        double a = 90 - elbowDownAngle;
-        double servoAngle = a + 90;
-        hingeController.setPosition(Func.map(servoAngle, -90, 180, -1, 1));
+    public void preAutonomousRest() {
+        hingeController.setPosition(preAutonRest);
     }
-
     public void restAngleConstant() {
         hingeController.setPosition(restPos);
     }
+    public void pickup() {hingeController.setPosition(pickup);}
+    public void score1() {hingeController.setPosition(score1);}
+    public void score2() {hingeController.setPosition(score2);}
 
     public void update() {
-        elbowAngle = ArmMapper.elbowAngle;
-        shoulderAngle = ArmMapper.shoulderAngle;
+//        elbowAngle = ArmMapper.elbowAngle;
+//        shoulderAngle = ArmMapper.shoulderAngle;
     }
 }
 

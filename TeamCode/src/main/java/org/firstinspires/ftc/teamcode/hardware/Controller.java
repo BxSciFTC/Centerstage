@@ -74,45 +74,25 @@ public class Controller implements Mechanism {
     }
 
     void armMove() {
-        double xShift = 0;
-        double yShift = 0;
-
-        //PRESETS
-        if (gamepadFirst1.triangle && !gamepadFirst2.triangle) {
-            yShift += 0.2;
-        }
-        else if (gamepadFirst1.cross && !gamepadFirst2.cross) {
-            yShift -= 0.2;
-        } else if (gamepadFirst1.square && !gamepadFirst2.square) {
-            xShift -= 0.2;
-        }else if (gamepadFirst1.circle && !gamepadFirst2.circle) {
-            xShift += 0.2;
-        }
-
-        robot.arm.shift(xShift, yShift);
 
 
+//        double xShift = 0;
+//        double yShift = 0;
+//
+//        //PRESETS
 //        if (gamepadFirst1.triangle && !gamepadFirst2.triangle) {
-//            robot.arm.high();
+//            yShift += 0.2;
 //        }
 //        else if (gamepadFirst1.cross && !gamepadFirst2.cross) {
-//            robot.arm.low();
+//            yShift -= 0.2;
 //        } else if (gamepadFirst1.square && !gamepadFirst2.square) {
-//            robot.arm.floor();
+//            xShift -= 0.2;
 //        }else if (gamepadFirst1.circle && !gamepadFirst2.circle) {
-//            robot.arm.drop();
+//            xShift += 0.2;
 //        }
+//        robot.arm.shift(xShift, yShift);
     }
 
-//    void clawHingeMove(){ //controls hinge with buttons
-//        if(gamepadFirst1.square && !gamepadFirst2.square){
-//            robot.claw.setThirtyAngle();
-//        }
-//        if(gamepadFirst1.circle && !gamepadFirst2.circle){
-//            robot.claw.setZeroAngle();
-//        }
-//        robot.claw.update();
-//    }
     void clawMove(){ //controls open and close with buttons
 //        TeleOpMain.tele.addData("claw move", "x");
         if(gamepadFirst1.left_bumper){

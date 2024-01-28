@@ -5,6 +5,53 @@ import org.firstinspires.ftc.teamcode.opMode.testing.armTesting.NewArm2;
 
 import static java.lang.Math.*;
 
+//\
+
+//
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
+//
+
 
 //formulaic mapping of motors and angles to x y coordinate
 public class ArmMapper implements Mechanism {
