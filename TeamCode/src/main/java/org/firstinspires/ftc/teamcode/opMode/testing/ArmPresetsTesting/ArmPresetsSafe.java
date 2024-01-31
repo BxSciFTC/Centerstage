@@ -28,8 +28,8 @@ public class ArmPresetsSafe implements Mechanism {
 
     public static double restq1 = 180 , restq2 = 26;
     public static double pickupq1 = 0 , pickupq2 = 180;
-    public static double score1q1 = 90 , score1q2 = 90;
-    public static double score2q1 = 60 , score2q2 = 120;
+    public static double score1q1 = 90 , score1q2 = 120;
+    public static double score2q1 = 80 , score2q2 = 150;
 
     Presets presets;
     Presets prevPresets;

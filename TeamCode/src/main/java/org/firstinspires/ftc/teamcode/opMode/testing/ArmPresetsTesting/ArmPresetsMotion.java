@@ -28,9 +28,9 @@ public class ArmPresetsMotion implements Mechanism {
     }
 
     public static double restq1 = 180 , restq2 = 26;
-    public static double pickupq1 = 90 , pickupq2 = 90;
-    public static double score1q1 = 90 , score1q2 = 90;
-    public static double score2q1 = 90 , score2q2 = 90;
+    public static double pickupq1 = 0 , pickupq2 = 180;
+    public static double score1q1 = 90 , score1q2 = 120;
+    public static double score2q1 = 80 , score2q2 = 150;
 
 
     public void rest() {
@@ -49,8 +49,8 @@ public class ArmPresetsMotion implements Mechanism {
         moveToMotionProfileByAngle(score2q1, score2q2);
     }
 
-    public static double maxA = 10;
-    public static double maxV = 45;
+    public static double maxA = 40; //degrees /s /s
+    public static double maxV = 90; //degrees /s
 
     public void moveToMotionProfileByAngle(double q1, double q2) {
         shoulderAngle = q1;
@@ -62,18 +62,24 @@ public class ArmPresetsMotion implements Mechanism {
         double shoulderDistanceDelta = shoulderAngle - shoulderCurrent;
         double elbowDistanceDelta = elbowAngle - elbowCurrent;
 
+        boolean neg1 = shoulderDistanceDelta < 0;
+        boolean neg2 = elbowDistanceDelta < 0;
+
         ElapsedTime shoulderTimer = new ElapsedTime();
         ElapsedTime elbowTimer = new ElapsedTime();
 
         double shoulderDx = 0;
         double elbowDx = 0;
 
+        shoulderDistanceDelta *= neg1 ? -1 : 1;
+        elbowDistanceDelta *= neg2 ? -1 : 1;
+
         while ((shoulderDx != shoulderDistanceDelta) || (elbowDx != elbowDistanceDelta)) {
             shoulderDx = motion_profile(maxA, maxV, shoulderDistanceDelta, shoulderTimer);
             elbowDx = motion_profile(maxA, maxV, elbowDistanceDelta, elbowTimer);
 
-            arm.shoulderGoToAngle(shoulderCurrent + shoulderDx);
-            arm.elbowGoToAngle(elbowCurrent + elbowDx);
+            arm.shoulderGoToAngle(shoulderCurrent + (neg1 ? -shoulderDx : shoulderDx));
+            arm.elbowGoToAngle(elbowCurrent + (neg2 ? -elbowDx : elbowDx));
         }
     }
 
