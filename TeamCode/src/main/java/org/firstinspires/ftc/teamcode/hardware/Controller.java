@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.opMode.teleOp.TeleOpMain;
 
@@ -9,6 +10,14 @@ import org.firstinspires.ftc.teamcode.opMode.teleOp.TeleOpMain;
 public class Controller implements Mechanism {
     Robot robot = new Robot();
 //    ElapsedTime timer;
+
+    Servo hingeController;
+    public static double preAutonRest = 1;
+    public static double restPos = 0;
+    public static double pickup = 0;
+    public static double score1 = 1;
+    public static double score2 = 0.5;
+
 
     HardwareMap hwMap;
 
@@ -27,6 +36,7 @@ public class Controller implements Mechanism {
         this.hwMap = hwMap;
         robot.init(hwMap);
 //        timer = new ElapsedTime();
+        hingeController = hwMap.get(Servo.class, "hinge");
     }
 
     public void run(Gamepad gamepad1, Gamepad gamepad2) {
@@ -42,7 +52,6 @@ public class Controller implements Mechanism {
 //        clawHingeMove();
         armMove();
         clawMove();
-        armMove();
 
 //        double frequencyTime = 1000.0 / frequency;
 //        if (timer.milliseconds() > frequencyTime) {
@@ -77,13 +86,17 @@ public class Controller implements Mechanism {
     void armMove() {
         //updownleftright
         if (gamepadFirst1.triangle && !gamepadFirst2.triangle) {
+            hingeController.setPosition(pickup);
             robot.arm.pickup();
         }
         else if (gamepadFirst1.cross && !gamepadFirst2.cross) {
+            hingeController.setPosition(restPos);
             robot.arm.rest();
         } else if (gamepadFirst1.square && !gamepadFirst2.square) {
+            hingeController.setPosition(score1);
             robot.arm.score1();
         }else if (gamepadFirst1.circle && !gamepadFirst2.circle) {
+            hingeController.setPosition(score2);
             robot.arm.score2();
         }
 
@@ -120,7 +133,7 @@ public class Controller implements Mechanism {
         else{
             robot.claw.rightClose();
         }
-        robot.claw.update();
+//        robot.claw.update();
 //        TeleOpMain.tele.update();
     }
 

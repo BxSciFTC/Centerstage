@@ -12,11 +12,11 @@ public class Claw implements Mechanism {
     Servo rightClawController;
     Servo hingeController;
 
-    public double open1 = 0.1;
-    public double close1 = 0.5;
+    public double open2 = 0.1;
+    public double close2 = 0.5;
 
-    public double open2 = 0.8;
-    public double close2 = 0.35;
+    public double open1 = 0.8;
+    public double close1 = 0.35;
 
     public static double preAutonRest = 1;
     public static double restPos = 0;
@@ -72,21 +72,24 @@ public class Claw implements Mechanism {
     public void preAutonomousRest() {
         TeleOpMain.tele.addData("111", "1");
 
-        hingeController.setPosition(preAutonRest);
+//        hingeController.setPosition(preAutonRest);
     }
     public void restAngleConstant() {
         TeleOpMain.tele.addData("222", "1");
-        hingeController.setPosition(restPos);
+//        hingeController.setPosition(restPos);
     }
     public void pickup() {
         TeleOpMain.tele.addData("333", "1");
-        hingeController.setPosition(pickup);}
+//        hingeController.setPosition(pickup);
+    }
     public void score1() {
         TeleOpMain.tele.addData("444", "1");
-        hingeController.setPosition(score1);}
+//        hingeController.setPosition(score1);
+    }
     public void score2() {
         TeleOpMain.tele.addData("555", "1");
-        hingeController.setPosition(score2);}
+//        hingeController.setPosition(score2);
+    }
 
     public void update() {
 //        elbowAngle = ArmMapper.elbowAngle;
