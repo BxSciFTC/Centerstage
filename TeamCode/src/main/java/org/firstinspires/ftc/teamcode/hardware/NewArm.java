@@ -111,8 +111,8 @@ public class NewArm implements Mechanism {
 
     public static int shoulderTarget = shoulder180;
     public static int elbowTarget = elbow26;
-    public static int shoulderPos = 0;
-    public static int elbowPos = 0;
+    public static int shoulderPos = shoulder180;
+    public static int elbowPos = elbow26;
 
 
     @Override
