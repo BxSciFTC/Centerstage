@@ -5,14 +5,14 @@ import org.firstinspires.ftc.teamcode.opMode.teleOp.TeleOpMain;
 
 public class ArmClawFSM implements Mechanism {
     HardwareMap hwMap;
-    ArmPresetsSafe arm;
+    ArmPresetsMotion arm;
     ClawFSM claw;
 
 //    ScuffedAngle desperation;
     @Override
     public void init(HardwareMap hwMap) {
         this.hwMap = hwMap;
-        arm = new ArmPresetsSafe();
+        arm = new ArmPresetsMotion();
         claw = new ClawFSM();
         arm.init(hwMap);
         claw.init(hwMap);
