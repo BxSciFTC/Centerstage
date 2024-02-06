@@ -49,38 +49,38 @@ public class ArmPresetsMotion implements Mechanism {
         moveToMotionProfileByAngle(score2q1, score2q2);
     }
 
-    public static double maxA = 40; //degrees /s /s
+    public static double maxA = 120; //degrees /s /s
     public static double maxV = 90; //degrees /s
+
+    double shoulderCurrent = 180, elbowCurrent = 27;
+    double shoulderDistanceDelta = 0, elbowDistanceDelta = 0;
+    boolean neg1 = false, neg2 = false;
+    ElapsedTime shoulderTimer = new ElapsedTime();
+    ElapsedTime elbowTimer = new ElapsedTime();
+    double shoulderDx = 0;
+    double elbowDx = 0;
 
     public void moveToMotionProfileByAngle(double q1, double q2) {
         shoulderAngle = q1;
         elbowAngle = q2;
 
-        double shoulderCurrent = arm.shoulderDegrees();
-        double elbowCurrent = arm.elbowDegrees();
+        shoulderCurrent = arm.shoulderDegrees();
+        elbowCurrent = arm.elbowDegrees();
 
-        double shoulderDistanceDelta = shoulderAngle - shoulderCurrent;
-        double elbowDistanceDelta = elbowAngle - elbowCurrent;
+        shoulderDistanceDelta = shoulderAngle - shoulderCurrent;
+        elbowDistanceDelta = elbowAngle - elbowCurrent;
 
-        boolean neg1 = shoulderDistanceDelta < 0;
-        boolean neg2 = elbowDistanceDelta < 0;
+        neg1 = shoulderDistanceDelta < 0;
+        neg2 = elbowDistanceDelta < 0;
 
-        ElapsedTime shoulderTimer = new ElapsedTime();
-        ElapsedTime elbowTimer = new ElapsedTime();
+        shoulderTimer.reset();
+        elbowTimer.reset();
 
-        double shoulderDx = 0;
-        double elbowDx = 0;
+        shoulderDx = 0;
+        elbowDx = 0;
 
         shoulderDistanceDelta *= neg1 ? -1 : 1;
         elbowDistanceDelta *= neg2 ? -1 : 1;
-
-        while ((shoulderDx != shoulderDistanceDelta) || (elbowDx != elbowDistanceDelta)) {
-            shoulderDx = motion_profile(maxA, maxV, shoulderDistanceDelta, shoulderTimer);
-            elbowDx = motion_profile(maxA, maxV, elbowDistanceDelta, elbowTimer);
-
-            arm.shoulderGoToAngle(shoulderCurrent + (neg1 ? -shoulderDx : shoulderDx));
-            arm.elbowGoToAngle(elbowCurrent + (neg2 ? -elbowDx : elbowDx));
-        }
     }
 
     double motion_profile(double max_acceleration, double max_velocity, double distance, ElapsedTime elapsed_time) {
@@ -145,5 +145,11 @@ public class ArmPresetsMotion implements Mechanism {
 
     public void PIDUpdate() {
         arm.PIDUpdate();
+            shoulderDx = motion_profile(maxA, maxV, shoulderDistanceDelta, shoulderTimer);
+            elbowDx = motion_profile(maxA, maxV, elbowDistanceDelta, elbowTimer);
+
+            arm.shoulderGoToAngle(shoulderCurrent + (neg1 ? -shoulderDx : shoulderDx));
+            arm.elbowGoToAngle(elbowCurrent + (neg2 ? -elbowDx : elbowDx));
+
     }
 }

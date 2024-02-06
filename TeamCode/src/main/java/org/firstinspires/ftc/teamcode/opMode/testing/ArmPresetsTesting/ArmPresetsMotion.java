@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.opMode.testing.armTesting.NewArm2;
 
 import static java.lang.Math.*;
 
-@Config
+//@Config
 public class ArmPresetsMotion implements Mechanism {
     public NewArm2 arm;
     HardwareMap hwMap;
